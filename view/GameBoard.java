@@ -29,10 +29,6 @@ public class GameBoard {
         JPanel panel = new JPanel();
         JPanel board = new JPanel();
         board.setPreferredSize(new Dimension(600, 600));
-        JPanel clock = new JPanel();
-        JPanel moves = new JPanel();
-        JPanel play1 = new JPanel();
-        JPanel play2 = new JPanel();
 
         // settings buttons
         JButton quit = new JButton("Quit Game");
