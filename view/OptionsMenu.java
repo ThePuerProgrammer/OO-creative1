@@ -14,8 +14,8 @@ import java.awt.Font;
 import java.awt.Color;
 
 public class OptionsMenu {
-    double tempTime = 0.0;
     static double saveTime = 0.0;
+    double tempTime = saveTime;
 
     JFrame window = new JFrame();
 
@@ -27,11 +27,10 @@ public class OptionsMenu {
     public void init() {
         Container container = window.getContentPane();
 
-        String s = "Select Time Limit";
-
         JLabel header = new JLabel("Select Time Limit", SwingConstants.CENTER);
         header.setFont(new Font("Heveltica", Font.PLAIN, 24));
         container.add(BorderLayout.NORTH, header);
+
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(500, 300));
         panel.setLayout(new GridLayout(3,3));
@@ -53,8 +52,8 @@ public class OptionsMenu {
         JButton tenMin = new JButton("10 mins");
         JButton fifteen = new JButton("15 mins");
         JButton thirty = new JButton("30 mins");
-        JButton fiveTwo = new JButton("5|2 split");
-        JButton tenTwo = new JButton("10|5 split");
+        JButton sixty  = new JButton("60 mins");
+        JButton twohrs = new JButton("2 hours");
 
         panel.add(oneMin);
         panel.add(twoMin);
@@ -63,12 +62,13 @@ public class OptionsMenu {
         panel.add(tenMin);
         panel.add(fifteen);
         panel.add(thirty);
-        panel.add(fiveTwo);
-        panel.add(tenTwo);
+        panel.add(sixty);
+        panel.add(twohrs);
 
         container.add(BorderLayout.CENTER, panel);
         container.add(BorderLayout.SOUTH, south);
 
+        // set selected time based on previous save value
         switch ((int)saveTime) {
             case 0: tenMin.setForeground(Color.RED); break;
             case 1: oneMin.setForeground(Color.RED); break;
@@ -78,9 +78,12 @@ public class OptionsMenu {
             case 10: tenMin.setForeground(Color.RED); break;
             case 15: fifteen.setForeground(Color.RED); break;
             case 30: thirty.setForeground(Color.RED); break;
+            case 60: sixty.setForeground(Color.RED); break;
+            case 120: twohrs.setForeground(Color.RED); break;
             default: break;
         }
 
+        // highlight red for selected time value. Continues for all buttons
         oneMin.addActionListener( e -> {
             oneMin.setForeground(Color.RED);
             twoMin.setForeground(Color.BLACK);
@@ -89,8 +92,8 @@ public class OptionsMenu {
             tenMin.setForeground(Color.BLACK);
             fifteen.setForeground(Color.BLACK);
             thirty.setForeground(Color.BLACK);
-            fiveTwo.setForeground(Color.BLACK);
-            tenTwo.setForeground(Color.BLACK);
+            sixty.setForeground(Color.BLACK);
+            twohrs.setForeground(Color.BLACK);
             tempTime = 1.0;
         });
 
@@ -102,8 +105,8 @@ public class OptionsMenu {
             tenMin.setForeground(Color.BLACK);
             fifteen.setForeground(Color.BLACK);
             thirty.setForeground(Color.BLACK);
-            fiveTwo.setForeground(Color.BLACK);
-            tenTwo.setForeground(Color.BLACK);
+            sixty.setForeground(Color.BLACK);
+            twohrs.setForeground(Color.BLACK);
             tempTime = 2.0;
         });
 
@@ -115,8 +118,8 @@ public class OptionsMenu {
             tenMin.setForeground(Color.BLACK);
             fifteen.setForeground(Color.BLACK);
             thirty.setForeground(Color.BLACK);
-            fiveTwo.setForeground(Color.BLACK);
-            tenTwo.setForeground(Color.BLACK);
+            sixty.setForeground(Color.BLACK);
+            twohrs.setForeground(Color.BLACK);
             tempTime = 3.0;
         });
 
@@ -128,8 +131,8 @@ public class OptionsMenu {
             tenMin.setForeground(Color.BLACK);
             fifteen.setForeground(Color.BLACK);
             thirty.setForeground(Color.BLACK);
-            fiveTwo.setForeground(Color.BLACK);
-            tenTwo.setForeground(Color.BLACK);
+            sixty.setForeground(Color.BLACK);
+            twohrs.setForeground(Color.BLACK);
             tempTime = 5.0;
         });
 
@@ -141,8 +144,8 @@ public class OptionsMenu {
             tenMin.setForeground(Color.RED);
             fifteen.setForeground(Color.BLACK);
             thirty.setForeground(Color.BLACK);
-            fiveTwo.setForeground(Color.BLACK);
-            tenTwo.setForeground(Color.BLACK);
+            sixty.setForeground(Color.BLACK);
+            twohrs.setForeground(Color.BLACK);
             tempTime = 10.0;
         });
 
@@ -154,8 +157,8 @@ public class OptionsMenu {
             tenMin.setForeground(Color.BLACK);
             fifteen.setForeground(Color.RED);
             thirty.setForeground(Color.BLACK);
-            fiveTwo.setForeground(Color.BLACK);
-            tenTwo.setForeground(Color.BLACK);
+            sixty.setForeground(Color.BLACK);
+            twohrs.setForeground(Color.BLACK);
             tempTime = 15.0;
         });
 
@@ -167,12 +170,12 @@ public class OptionsMenu {
             tenMin.setForeground(Color.BLACK);
             fifteen.setForeground(Color.BLACK);
             thirty.setForeground(Color.RED);
-            fiveTwo.setForeground(Color.BLACK);
-            tenTwo.setForeground(Color.BLACK);
+            sixty.setForeground(Color.BLACK);
+            twohrs.setForeground(Color.BLACK);
             tempTime = 30.0;
         });
 
-        fiveTwo.addActionListener( e -> {
+        sixty.addActionListener( e -> {
             oneMin.setForeground(Color.BLACK);
             twoMin.setForeground(Color.BLACK);
             thrMin.setForeground(Color.BLACK);
@@ -180,12 +183,12 @@ public class OptionsMenu {
             tenMin.setForeground(Color.BLACK);
             fifteen.setForeground(Color.BLACK);
             thirty.setForeground(Color.BLACK);
-            fiveTwo.setForeground(Color.RED);
-            tenTwo.setForeground(Color.BLACK);
-            tempTime = 5.0;
+            sixty.setForeground(Color.RED);
+            twohrs.setForeground(Color.BLACK);
+            tempTime = 60.0;
         });
         
-        tenTwo.addActionListener( e -> {
+        twohrs.addActionListener( e -> {
             oneMin.setForeground(Color.BLACK);
             twoMin.setForeground(Color.BLACK);
             thrMin.setForeground(Color.BLACK);
@@ -193,10 +196,11 @@ public class OptionsMenu {
             tenMin.setForeground(Color.BLACK);
             fifteen.setForeground(Color.BLACK);
             thirty.setForeground(Color.BLACK);
-            fiveTwo.setForeground(Color.BLACK);
-            tenTwo.setForeground(Color.RED);
-            tempTime = 10.0;
+            sixty.setForeground(Color.BLACK);
+            twohrs.setForeground(Color.RED);
+            tempTime = 120.0;
         });
+
 
         cancel.addActionListener( e -> {
             window.getContentPane().removeAll();
@@ -216,5 +220,9 @@ public class OptionsMenu {
             window.revalidate();
             saveTime = tempTime;
         });
+    }
+
+    public double getTimer() {
+        return saveTime;
     }
 }
