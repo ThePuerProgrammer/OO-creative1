@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.event.MouseInputListener;
 
 import controller.MouseClickListener;
 
@@ -17,7 +16,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.event.MouseListener;
 
 public class GameBoard {
     JFrame window = new JFrame();

@@ -18,13 +18,11 @@ public class MouseClickListener implements MouseInputListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        panel.setBackground(new Color(255, 195, 45));
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-
+        panel.setBackground(new Color(255, 195, 45));
     }
 
     @Override
