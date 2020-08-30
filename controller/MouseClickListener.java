@@ -22,7 +22,7 @@ public class MouseClickListener implements MouseInputListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        panel.setBackground(new Color(255, 195, 45));
+        panel.setBackground(new Color(255, 195, 45, 200));
     }
 
     @Override
