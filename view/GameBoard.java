@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.event.MouseInputListener;
+
+import controller.MouseClickListener;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -14,6 +17,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.MouseListener;
 
 public class GameBoard {
     JFrame window = new JFrame();
@@ -93,24 +97,38 @@ public class GameBoard {
         JPanel a8 = new JPanel();
         a8.setBackground(lightSquares);
         board.add(a8);
+        a8.addMouseListener(new MouseClickListener(a8));
+
         JPanel b8 = new JPanel();
         b8.setBackground(darkSquares);
         board.add(b8);
+        b8.addMouseListener(new MouseClickListener(b8));
+
         JPanel c8 = new JPanel();
         c8.setBackground(lightSquares);
         board.add(c8);
+        c8.addMouseListener(new MouseClickListener(c8));
+
         JPanel d8 = new JPanel();
         d8.setBackground(darkSquares);
         board.add(d8);
+        d8.addMouseListener(new MouseClickListener(d8));
+
         JPanel e8 = new JPanel();
         e8.setBackground(lightSquares);
         board.add(e8);
+        e8.addMouseListener(new MouseClickListener(e8));
+
         JPanel f8 = new JPanel();
         f8.setBackground(darkSquares);
         board.add(f8);
+        f8.addMouseListener(new MouseClickListener(f8));
+
         JPanel g8 = new JPanel();
         g8.setBackground(lightSquares);
         board.add(g8);
+        g8.addMouseListener(new MouseClickListener(g8));
+
         JPanel h8 = new JPanel();
         h8.setBackground(darkSquares);
         board.add(h8);
