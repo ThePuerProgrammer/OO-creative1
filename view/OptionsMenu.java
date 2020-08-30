@@ -2,14 +2,21 @@ package view;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Color;
 
 public class OptionsMenu {
+    double tempTime = 0.0;
+    static double saveTime = 0.0;
+
     JFrame window = new JFrame();
 
     public OptionsMenu(JFrame window) {
@@ -19,6 +26,12 @@ public class OptionsMenu {
 
     public void init() {
         Container container = window.getContentPane();
+
+        String s = "Select Time Limit";
+
+        JLabel header = new JLabel("Select Time Limit", SwingConstants.CENTER);
+        header.setFont(new Font("Heveltica", Font.PLAIN, 24));
+        container.add(BorderLayout.NORTH, header);
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(500, 300));
         panel.setLayout(new GridLayout(3,3));
@@ -33,15 +46,15 @@ public class OptionsMenu {
         south.add(cancel);
         south.add(save);
         
-        JButton oneMin = new JButton("1");
-        JButton twoMin = new JButton("2");
-        JButton thrMin = new JButton("3");
-        JButton fiveMin = new JButton("5");
-        JButton tenMin = new JButton("10");
-        JButton fifteen = new JButton("15");
-        JButton thirty = new JButton("30");
-        JButton fiveTwo = new JButton("5|2");
-        JButton tenTwo = new JButton("10|2");
+        JButton oneMin = new JButton("1 min");
+        JButton twoMin = new JButton("2 mins");
+        JButton thrMin = new JButton("3 mins");
+        JButton fiveMin = new JButton("5 mins");
+        JButton tenMin = new JButton("10 mins");
+        JButton fifteen = new JButton("15 mins");
+        JButton thirty = new JButton("30 mins");
+        JButton fiveTwo = new JButton("5|2 split");
+        JButton tenTwo = new JButton("10|5 split");
 
         panel.add(oneMin);
         panel.add(twoMin);
@@ -53,8 +66,137 @@ public class OptionsMenu {
         panel.add(fiveTwo);
         panel.add(tenTwo);
 
-        container.add(BorderLayout.NORTH, panel);
+        container.add(BorderLayout.CENTER, panel);
         container.add(BorderLayout.SOUTH, south);
+
+        switch ((int)saveTime) {
+            case 0: tenMin.setForeground(Color.RED); break;
+            case 1: oneMin.setForeground(Color.RED); break;
+            case 2: twoMin.setForeground(Color.RED); break;
+            case 3: thrMin.setForeground(Color.RED); break;
+            case 5: fiveMin.setForeground(Color.RED); break;
+            case 10: tenMin.setForeground(Color.RED); break;
+            case 15: fifteen.setForeground(Color.RED); break;
+            case 30: thirty.setForeground(Color.RED); break;
+            default: break;
+        }
+
+        oneMin.addActionListener( e -> {
+            oneMin.setForeground(Color.RED);
+            twoMin.setForeground(Color.BLACK);
+            thrMin.setForeground(Color.BLACK);
+            fiveMin.setForeground(Color.BLACK);
+            tenMin.setForeground(Color.BLACK);
+            fifteen.setForeground(Color.BLACK);
+            thirty.setForeground(Color.BLACK);
+            fiveTwo.setForeground(Color.BLACK);
+            tenTwo.setForeground(Color.BLACK);
+            tempTime = 1.0;
+        });
+
+        twoMin.addActionListener( e -> {
+            oneMin.setForeground(Color.BLACK);
+            twoMin.setForeground(Color.RED);
+            thrMin.setForeground(Color.BLACK);
+            fiveMin.setForeground(Color.BLACK);
+            tenMin.setForeground(Color.BLACK);
+            fifteen.setForeground(Color.BLACK);
+            thirty.setForeground(Color.BLACK);
+            fiveTwo.setForeground(Color.BLACK);
+            tenTwo.setForeground(Color.BLACK);
+            tempTime = 2.0;
+        });
+
+        thrMin.addActionListener( e -> {
+            oneMin.setForeground(Color.BLACK);
+            twoMin.setForeground(Color.BLACK);
+            thrMin.setForeground(Color.RED);
+            fiveMin.setForeground(Color.BLACK);
+            tenMin.setForeground(Color.BLACK);
+            fifteen.setForeground(Color.BLACK);
+            thirty.setForeground(Color.BLACK);
+            fiveTwo.setForeground(Color.BLACK);
+            tenTwo.setForeground(Color.BLACK);
+            tempTime = 3.0;
+        });
+
+        fiveMin.addActionListener( e -> {
+            oneMin.setForeground(Color.BLACK);
+            twoMin.setForeground(Color.BLACK);
+            thrMin.setForeground(Color.BLACK);
+            fiveMin.setForeground(Color.RED);
+            tenMin.setForeground(Color.BLACK);
+            fifteen.setForeground(Color.BLACK);
+            thirty.setForeground(Color.BLACK);
+            fiveTwo.setForeground(Color.BLACK);
+            tenTwo.setForeground(Color.BLACK);
+            tempTime = 5.0;
+        });
+
+        tenMin.addActionListener( e -> {
+            oneMin.setForeground(Color.BLACK);
+            twoMin.setForeground(Color.BLACK);
+            thrMin.setForeground(Color.BLACK);
+            fiveMin.setForeground(Color.BLACK);
+            tenMin.setForeground(Color.RED);
+            fifteen.setForeground(Color.BLACK);
+            thirty.setForeground(Color.BLACK);
+            fiveTwo.setForeground(Color.BLACK);
+            tenTwo.setForeground(Color.BLACK);
+            tempTime = 10.0;
+        });
+
+        fifteen.addActionListener( e -> {
+            oneMin.setForeground(Color.BLACK);
+            twoMin.setForeground(Color.BLACK);
+            thrMin.setForeground(Color.BLACK);
+            fiveMin.setForeground(Color.BLACK);
+            tenMin.setForeground(Color.BLACK);
+            fifteen.setForeground(Color.RED);
+            thirty.setForeground(Color.BLACK);
+            fiveTwo.setForeground(Color.BLACK);
+            tenTwo.setForeground(Color.BLACK);
+            tempTime = 15.0;
+        });
+
+        thirty.addActionListener( e -> {
+            oneMin.setForeground(Color.BLACK);
+            twoMin.setForeground(Color.BLACK);
+            thrMin.setForeground(Color.BLACK);
+            fiveMin.setForeground(Color.BLACK);
+            tenMin.setForeground(Color.BLACK);
+            fifteen.setForeground(Color.BLACK);
+            thirty.setForeground(Color.RED);
+            fiveTwo.setForeground(Color.BLACK);
+            tenTwo.setForeground(Color.BLACK);
+            tempTime = 30.0;
+        });
+
+        fiveTwo.addActionListener( e -> {
+            oneMin.setForeground(Color.BLACK);
+            twoMin.setForeground(Color.BLACK);
+            thrMin.setForeground(Color.BLACK);
+            fiveMin.setForeground(Color.BLACK);
+            tenMin.setForeground(Color.BLACK);
+            fifteen.setForeground(Color.BLACK);
+            thirty.setForeground(Color.BLACK);
+            fiveTwo.setForeground(Color.RED);
+            tenTwo.setForeground(Color.BLACK);
+            tempTime = 5.0;
+        });
+        
+        tenTwo.addActionListener( e -> {
+            oneMin.setForeground(Color.BLACK);
+            twoMin.setForeground(Color.BLACK);
+            thrMin.setForeground(Color.BLACK);
+            fiveMin.setForeground(Color.BLACK);
+            tenMin.setForeground(Color.BLACK);
+            fifteen.setForeground(Color.BLACK);
+            thirty.setForeground(Color.BLACK);
+            fiveTwo.setForeground(Color.BLACK);
+            tenTwo.setForeground(Color.RED);
+            tempTime = 10.0;
+        });
 
         cancel.addActionListener( e -> {
             window.getContentPane().removeAll();
@@ -72,6 +214,7 @@ public class OptionsMenu {
             window.pack();
             window.setLocationRelativeTo(null); 
             window.revalidate();
+            saveTime = tempTime;
         });
     }
 }

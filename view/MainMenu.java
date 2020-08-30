@@ -28,11 +28,11 @@ public class MainMenu {
 
         JButton newGame = new JButton("Play Chess!");
         newGame.setFont(new Font("Heveltica", Font.BOLD, 30));
-        newGame.setForeground(new Color(255,100,100));
+        newGame.setForeground(Color.BLACK);
 
         JButton options = new JButton("Options");
         options.setFont(new Font("Heveltica", Font.PLAIN, 30));
-        options.setForeground(Color.DARK_GRAY);
+        options.setForeground(Color.gray);
 
         panel.add(newGame);
         panel.add(options);
