@@ -10,17 +10,6 @@ import java.util.ArrayList;
 
 public class Board {
 
-    enum nToI {
-        a1, b1, c1, d1, e1, f1, g1, h1,
-        a2, b2, c2, d2, e2, f2, g2, h2,
-        a3, b3, c3, d3, e3, f3, g3, h3,
-        a4, b4, c4, d4, e4, f4, g4, h4,
-        a5, b5, c5, d5, e5, f5, g5, h5,
-        a6, b6, c6, d6, e6, f6, g6, h6,
-        a7, b7, c7, d7, e7, f7, g7, h7,
-        a8, b8, c8, d8, e8, f8, g8, h8 
-    };
-
     ArrayList<String> whiteCaptured = new ArrayList<String>();
     ArrayList<String> blackCaptured = new ArrayList<String>();
     ArrayList<Object[]> squares = new ArrayList<Object[]>();    
@@ -191,7 +180,7 @@ public class Board {
             case -3: return validRMove(cur, next);
             case -4: return validBMove(cur, next);
             case -5: return validNMove(cur, next);
-            case -6: return ValidPMove(cur, next);
+            case -6: return validPMove(cur, next);
             default: return false;
         }
     }
@@ -335,6 +324,192 @@ public class Board {
             posOfBK = next;
             bkingMoved = true;
         }
+        return true;
+    }
+
+    public boolean validQMove(int cur, int next) {
+        // if theres a piece of same color on the chosen square to move to
+        if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
+        if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
+    
+        // figure out distance between squares
+        int dif = java.lang.Math.abs(next - cur);
+        // check for piece in between move
+        // and cover directionality
+        // moving diagonally positive slope
+        if (dif % 9 == 0) {
+            // top right
+            if (next > cur) {
+                for (int i = cur + 9; i < next; i += 9)
+                    if (selectedSquare(i) != 0) return false;
+            } else { // bottom left
+                for (int i = cur - 9; i > next; i -= 9)
+                    if (selectedSquare(i) != 0) return false;
+            }
+        } else if (dif % 7 == 0) { // diagonally negative slope
+            // top left
+            if (next > cur) {
+                for (int i = cur + 7; i < next; i += 7)
+                    if (selectedSquare(i) != 0) return false;
+            } else { // bottom right
+                for (int i = cur - 7; i > next; i -= 7)
+                    if (selectedSquare(i) != 0) return false;
+            }
+        } else if (dif % 8 == 0) { // vertical
+            // above
+            if (next > cur) {
+                for (int i = cur + 8; i < next; i += 8)
+                    if (selectedSquare(i) != 0) return false;
+            } else { // below
+                for (int i = cur - 8; i > next; i -= 8)
+                    if (selectedSquare(i) != 0) return false;
+            }
+        } else if (dif > 9) {
+            return false;
+        } else {
+            // right
+            if (next > cur) {
+                for (int i = cur + 1; i < next; ++i) {
+                    if (selectedSquare(i) != 0) return false;
+                    if  (isEdgeOfBoard(i)) return false;
+                }
+            } else { // left
+                for (int i = cur - 1; i > next; --i) {
+                    if (selectedSquare(i) != 0) return false;
+                    if  (isEdgeOfBoard(i)) return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean validRMove(int cur, int next) {
+        // if theres a piece of same color on the chosen square to move to
+        if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
+        if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
+    
+        int dif = java.lang.Math.abs(cur - next);
+        if (dif % 8 != 0 && dif > 7) {
+            return false;
+        } else if (dif % 8 == 0) {
+            if (next > cur) {
+                for (int i = cur + 8; i < next; i += 8)
+                    if (selectedSquare(i) != 0) return false;
+            } else {
+                for (int i = cur - 8; i > next; i -= 8)
+                    if (selectedSquare(i) != 0) return false;
+            } 
+        } else {
+            // right
+            if (next > cur) {
+                for (int i = cur + 1; i < next; ++i) {
+                    if (selectedSquare(i) != 0) return false;
+                    if  (isEdgeOfBoard(i)) return false;
+                }
+            } else { // left
+                for (int i = cur - 1; i > next; --i) {
+                    if (selectedSquare(i) != 0) return false;
+                    if  (isEdgeOfBoard(i)) return false;
+                }
+            }
+        }
+        if (cur == 0) wLrookMoved = true;
+        else if (cur == 7) wRrookMoved = true;
+        else if (cur == 56) bLrookMoved = true;
+        else if (cur == 63) bRrookMoved = true;
+        return true;
+    }
+
+    public boolean validBMove(int cur, int next) {
+        if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
+        if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
+    
+        int dif = java.lang.Math.abs(cur - next);
+        // checks for diagonal movement
+        if (dif % 7 != 0 && dif % 9 != 0) return false;
+    
+        // checks for piece in path of movement
+        if (dif % 7 == 0) {
+            if (next > cur) {
+                for (int i = cur + 7; i < next; i += 7)
+                    if (selectedSquare(i) != 0) return false;
+            } else {
+                for (int i = cur - 7; i > next; i -= 7)
+                    if (selectedSquare(i) != 0) return false;
+            }
+        } else {
+            if (next > cur) {
+                for (int i = cur + 9; i < next; i += 9)
+                    if (selectedSquare(i) != 0) return false;
+            } else {
+                for (int i = cur - 9; i > next; i -= 9)
+                    if (selectedSquare(i) != 0) return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean validNMove(int cur, int next) {
+        // if theres a piece of same color on the chosen square to move to
+        if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
+        if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
+    
+        int dif = java.lang.Math.abs(cur - next);
+        // the only possible moves for a knight
+        if (dif != 6 && dif != 10 && dif != 15 && dif != 17) return false;
+        
+        Object[] objNext = squares.get(next);
+        char fileNext = (char)objNext[0];
+
+        Object[] objCur  = squares.get(cur);
+        char fileCur = (char)objCur[0];
+
+        if ((fileCur == 'b' && fileNext == 'h') ||
+            (fileCur == 'a' && fileNext > 'c')  ||
+            (fileCur == 'g' && fileNext == 'a') ||
+            (fileCur == 'h' && fileNext < 'f'))
+            return false;
+    
+        return true;
+    }
+
+    public boolean validPMove(int cur, int next) {
+        // if theres a piece of same color on the chosen square to move to
+        if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
+        if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
+    
+        // cant go back
+        if (selectedSquare(cur) > 0) {
+            if (next < cur) return false;
+        } else {
+            if (next > cur) return false;
+        }
+    
+        // find int distance between squares
+        int dif = java.lang.Math.abs(cur - next);
+        // quickly rule out any invalid move
+        if (dif != 7 && dif != 8 && dif != 9 && dif != 16) return false;
+
+        // edges of board, wrapping is false
+        Object[] objNext = squares.get(next);
+        char fileNext = (char)objNext[0];
+
+        Object[] objCur  = squares.get(cur);
+        char fileCur = (char)objCur[0];
+
+        if ((fileCur == 'a' && fileNext == 'h') ||
+            (fileCur == 'h' && fileNext == 'a'))
+            return false;
+        // can ony move diagonally to capture
+        if ((dif == 7 || dif == 9) && selectedSquare(next) == 0) return false;
+        // can only move two squares on first move
+        if (isWhite(cur)) {
+            if (dif == 16 && (cur > 15 || selectedSquare(next) != 0)) return false;
+        } else {
+            if (dif == 16 && (cur < 48 || selectedSquare(next) != 0)) return false;
+        }
+        // cant capture vertically 
+        if (dif == 8 && selectedSquare(next) != 0) return false; 
         return true;
     }
 
