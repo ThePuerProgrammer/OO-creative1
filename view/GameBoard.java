@@ -23,7 +23,7 @@ public class GameBoard {
 
     public GameBoard(JFrame window) {
         this.window = window;
-        window.setPreferredSize(new Dimension(1200,800));
+        window.setPreferredSize(new Dimension(1200,850));
         window.setTitle("Play Wimpy Chess");
     }
 
@@ -105,6 +105,44 @@ public class GameBoard {
         ImageIcon whiteKnight = new ImageIcon("assets/WhiteKnight.png");
         ImageIcon whiteQueen = new ImageIcon("assets/WhiteQueen.png");
         ImageIcon whiteKing = new ImageIcon("assets/WhiteKing.png");
+        ImageIcon user = new ImageIcon("assets/user.png");
+
+        // add user icons
+        // create dimensions
+        Dimension space = new Dimension(480,100);
+        Dimension u = new Dimension(110,100);
+
+        // Labels
+        JLabel user1 = new JLabel("Player 1");
+        JLabel user2 = new JLabel("Player 2");
+        JLabel captures = new JLabel("Captured Pieces");
+        JLabel captures2 = new JLabel("Captured Pieces");
+
+        // panels
+        JPanel p1Captured = new JPanel();
+        p1Captured.setPreferredSize(space);
+        p1Captured.setBackground(Color.lightGray);
+        p1Captured.add(captures);
+        JPanel p2Captured = new JPanel();
+        p2Captured.setPreferredSize(space);
+        p2Captured.setBackground(Color.lightGray);
+        p2Captured.add(captures2);
+
+
+        JPanel u1 = new JPanel();
+        u1.setPreferredSize(u);
+        JPanel u2 = new JPanel();
+        u2.setPreferredSize(u);
+
+        user1.setIcon(user);
+        user2.setIcon(user);
+        u1.add(user1);
+        u2.add(user2);
+
+        p1.add(BorderLayout.EAST, p1Captured);
+        p2.add(BorderLayout.EAST, p2Captured);
+        p1.add(BorderLayout.WEST, u1);
+        p2.add(BorderLayout.WEST, u2);
 
 
         // generate chessboard squares out of JPanels. Add pieces using JLabels and ImageIcons
