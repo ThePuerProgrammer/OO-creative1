@@ -1,12 +1,25 @@
-// ** This class drives the logic of chess by comparing ** //
-// ** positions of a 64 index array of characters and   ** //
-// ** keeping track of the math
+// ** This class drives the logic of chess by comparing
+// ** positions of a 64 index array of characters.
+// ** Based on a C++ program written by myself over the summer of 2020. 
+// ** Jesse Rankins
+// ** August 2020
 
 package model;
 
 import java.util.ArrayList;
 
 public class Board {
+
+    enum nToI {
+        a1, b1, c1, d1, e1, f1, g1, h1,
+        a2, b2, c2, d2, e2, f2, g2, h2,
+        a3, b3, c3, d3, e3, f3, g3, h3,
+        a4, b4, c4, d4, e4, f4, g4, h4,
+        a5, b5, c5, d5, e5, f5, g5, h5,
+        a6, b6, c6, d6, e6, f6, g6, h6,
+        a7, b7, c7, d7, e7, f7, g7, h7,
+        a8, b8, c8, d8, e8, f8, g8, h8 
+    };
 
     ArrayList<String> whiteCaptured = new ArrayList<String>();
     ArrayList<String> blackCaptured = new ArrayList<String>();
@@ -141,4 +154,287 @@ public class Board {
         return 0;
     }
 
+    public int selectedSquare(int square) {
+
+        Object[] temp = squares.get(square);
+        String s = (String)temp[2];
+        // white pieces
+        if (s == wK) return 1;
+        else if (s == wQ) return 2;
+        else if (s == wR) return 3;
+        else if (s == wB) return 4;
+        else if (s == wN) return 5;
+        else if (s == wP) return 6;
+    
+        // black pieces
+        else if (s == bK) return -1;
+        else if (s == bQ) return -2;
+        else if (s == bR) return -3;
+        else if (s == bB) return -4;
+        else if (s == bN) return -5;
+        else if (s == bP) return -6;
+    
+        return 0;
+    }
+
+    public Boolean validMove(int cur, int next) {
+        int piece = selectedSquare(cur);
+        switch (piece) {
+            case 1: return validKMove(cur, next);
+            case 2: return validQMove(cur, next);
+            case 3: return validRMove(cur, next);
+            case 4: return validBMove(cur, next);
+            case 5: return validNMove(cur, next);
+            case 6: return validPMove(cur, next);
+            case -1: return validKMove(cur, next);
+            case -2: return validQMove(cur, next);
+            case -3: return validRMove(cur, next);
+            case -4: return validBMove(cur, next);
+            case -5: return validNMove(cur, next);
+            case -6: return ValidPMove(cur, next);
+            default: return false;
+        }
+    }
+
+    public boolean validKMove(int cur, int next) {
+        boolean kingMoved;
+        boolean lRookMoved;
+        boolean rRookMoved;
+
+        // collect [file,rank,piece] for current and next square
+        Object[] objNext = squares.get(next);
+        char fileNext = (char)objNext[0];
+        int rankNext = (int)objNext[1];
+        String pieceNext = (String)objNext[2];
+
+        Object[] objCur  = squares.get(cur);
+        char fileCur = (char)objCur[0];
+        int rankCur = (int)objCur[1];
+        String pieceCur = (String)objCur[2];
+
+        // if theres a white piece on the chosen square to move to
+        if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
+        if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
+        // tries to wrap board
+        if (isEdgeOfBoard(cur))
+            if ((fileCur == 'a' && fileNext == 'h') ||
+                (fileCur == 'h' && fileNext == 'a'))
+                return false;
+    
+        if (isWhite(cur)) {
+            kingMoved = wkingMoved;
+            lRookMoved = wLrookMoved;
+            rRookMoved = wRrookMoved;
+        } else {
+            kingMoved = bkingMoved;
+            lRookMoved = bLrookMoved;
+            rRookMoved = bRrookMoved;
+        }
+    
+        // Castling queenside
+        if ((!kingMoved && !lRookMoved) && ((cur == 4 && next == 2) ||
+                                          (cur == 60 && next == 58))
+            ) {
+            if (next == 58) {
+                for (int i = cur - 1; i > 56; --i)
+                    if (selectedSquare(i) != 0)
+                        return false;
+
+                Object[] fifty6 = squares.get(56);
+                String tS = (String)fifty6[2];
+                Object[] fifty9 = squares.get(59);
+                fifty9[2] = tS;
+                squares.set(59, fifty9);
+                // squares[59].second = squares[56].second; // REMNANTS OF MY C++ PROGRAM FOR REFERENCE
+                fifty6[2] = " ";
+                squares.set(56, fifty6);
+                // squares[56].second = " ";
+                posOfBK = next;
+                bkingMoved = true;
+                bLrookMoved = true;
+                return true;
+            } else {
+                for (int i = cur - 1; i > 0; --i)
+                    if (selectedSquare(i) != 0)
+                        return false;
+
+                Object[] zero = squares.get(0);
+                String tS = (String)zero[2];
+                Object[] three = squares.get(3);
+                three[2] = tS;
+                squares.set(3, three);
+                // squares[3].second = squares[0].second;
+                zero[2] = " ";
+                squares.set(0, zero);
+                // squares[0].second = " ";
+                posOfWK = next;
+                wkingMoved = true;
+                wLrookMoved = true;
+                return true;
+            }
+        } else if ((!kingMoved && !rRookMoved) && ((cur == 4 && next == 6) ||
+                                                 (cur == 60 && next == 62))
+            ) { // Castling Kingside
+            if (next == 62) {
+                for (int i = cur + 1; i < 63; ++i)
+                    if (selectedSquare(i) != 0)
+                        return false;
+
+                Object[] sixty3 = squares.get(63);
+                String tS = (String)sixty3[2];
+                Object[] sixty1 = squares.get(61);
+                sixty1[2] = tS;
+                squares.set(61, sixty1);
+                // squares[61].second = squares[63].second;
+                sixty3[2] = " ";
+                squares.set(63, sixty3);
+                // squares[63].second = " ";
+                posOfBK = next;
+                bkingMoved = true;
+                bRrookMoved = true;
+                return true;
+            } else {
+                for (int i = cur + 1; i < 7; ++i)
+                    if (selectedSquare(i) != 0)
+                        return false;
+
+                Object[] seven = squares.get(7);
+                String tS = (String)seven[2];
+                Object[] five = squares.get(5);
+                five[2] = tS;
+                squares.set(5, five);
+                // squares[5].second = squares[7].second;
+                seven[2] = " ";
+                squares.set(7, seven);
+                // squares[7].second = " ";
+                posOfWK = next;
+                wkingMoved = true;
+                wRrookMoved = true;
+                return true;
+            }
+        } else if ((kingMoved || lRookMoved) && ((cur == 4 && next == 2) ||
+                                          (cur == 60 && next == 58))
+            ) {
+                return false;
+        } else if ((kingMoved || rRookMoved) && ((cur == 4 && next == 6) ||
+                                                 (cur == 60 && next == 62))
+            ) {
+                return false;
+        }
+    
+        // singe direction allowed for king
+        if (next != cur + 1 && next != cur - 1 && next != cur + 7 &&
+            next != cur + 8 && next != cur + 9 && next != cur - 9 &&
+            next != cur - 8 && next != cur - 7)
+            return false;
+    
+        if (isWhite(cur)) {
+            posOfWK = next;
+            wkingMoved = true;
+        } else {
+            posOfBK = next;
+            bkingMoved = true;
+        }
+        return true;
+    }
+
+    public boolean isEdgeOfBoard(int square) {
+        return square == 0 || square == 7 || square == 8 || square == 15 ||
+               square == 16 || square == 23 || square == 24 || square == 31 ||
+               square == 32 || square == 39 || square == 40 || square == 47 ||
+               square == 48 || square == 55 || square == 56 || square == 63;
+    }
+
+    public int notationToInteger(String s) {
+        String square = s.toLowerCase(); 
+
+        
+        if (square.charAt(0) == 'a') {
+            if (square == "a1") return 0;
+            else if (square == "a2") return 8;
+            else if (square == "a3") return 16;
+            else if (square == "a4") return 24;
+            else if (square == "a5") return 32;
+            else if (square == "a6") return 40;
+            else if (square == "a7") return 48;
+            else if (square == "a8") return 56;
+        } else if (square.charAt(0) == 'b') {
+            if (square == "b1") return 1;
+            else if (square == "b2") return 9;
+            else if (square == "b3") return 17;
+            else if (square == "b4") return 25;
+            else if (square == "b5") return 33;
+            else if (square == "b6") return 41;
+            else if (square == "b7") return 49;
+            else if (square == "b8") return 57;
+        } else if (square.charAt(0) == 'c') {
+            if (square == "c1") return 2;
+            else if (square == "c2") return 10;
+            else if (square == "c3") return 18;
+            else if (square == "c4") return 26;
+            else if (square == "c5") return 34;
+            else if (square == "c6") return 42;
+            else if (square == "c7") return 50;
+            else if (square == "c8") return 58;
+        } else if (square.charAt(0) == 'd') {
+            if (square == "d1") return 3;
+            else if (square == "d2") return 11;
+            else if (square == "d3") return 19;
+            else if (square == "d4") return 27;
+            else if (square == "d5") return 35;
+            else if (square == "d6") return 43;
+            else if (square == "d7") return 51;
+            else if (square == "d8") return 59;
+        } else if (square.charAt(0) == 'e') {
+            if (square == "e1") return 4;
+            else if (square == "e2") return 12;
+            else if (square == "e3") return 20;
+            else if (square == "e4") return 28;
+            else if (square == "e5") return 36;
+            else if (square == "e6") return 44;
+            else if (square == "e7") return 52;
+            else if (square == "e8") return 60;
+        } else if (square.charAt(0) == 'f') {
+            if (square == "f1") return 5;
+            else if (square == "f2") return 13;
+            else if (square == "f3") return 21;
+            else if (square == "f4") return 29;
+            else if (square == "f5") return 37;
+            else if (square == "f6") return 45;
+            else if (square == "f7") return 53;
+            else if (square == "f8") return 61;
+        } else if (square.charAt(0) == 'g') {
+            if (square == "g1") return 6;
+            else if (square == "g2") return 14;
+            else if (square == "g3") return 22;
+            else if (square == "g4") return 30;
+            else if (square == "g5") return 38;
+            else if (square == "g6") return 46;
+            else if (square == "g7") return 54;
+            else if (square == "g8") return 62;
+        } else if (square.charAt(0) == 'h') {
+            if (square == "h1") return 7;
+            else if (square == "h2") return 15;
+            else if (square == "h3") return 23;
+            else if (square == "h4") return 31;
+            else if (square == "h5") return 39;
+            else if (square == "h6") return 47;
+            else if (square == "h7") return 55;
+            else if (square == "h8") return 63;
+        }
+    
+        return -1;
+    }
+
+    public boolean isWhite(int square) {
+        Object[] temp = squares.get(square);
+        String s = (String)temp[2];
+        return s == wR || s == wN || s == wB || s == wQ || s == wK || s == wP;
+    }
+
+    public boolean isBlack(int square) {
+        Object[] temp = squares.get(square);
+        String s = (String)temp[2];
+        return s == bR || s == bN || s == bB || s == bQ || s == bK || s == bP;
+    }
 }

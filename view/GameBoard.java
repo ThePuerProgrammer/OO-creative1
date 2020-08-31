@@ -1,5 +1,6 @@
 package view;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,7 +31,7 @@ public class GameBoard {
     public void init() {
 
         // play window theme colors
-        Color grey = new Color(70,70,70);
+        Color grey = new Color(80,80,80);
         Color theme = new Color(144,166,169);
 
         // primary container
@@ -52,15 +53,17 @@ public class GameBoard {
 
         // move list text area
         JTextArea moveList = new JTextArea();
+        moveList.setBackground(Color.lightGray);
+        moveList.setBorder(BorderFactory.createLoweredBevelBorder());
         JScrollPane scrollPane = new JScrollPane(moveList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setPreferredSize(new Dimension(400, 600));
 
         // label for the move list
         JLabel moveMenu = new JLabel("Move History",SwingConstants.CENTER);
-        moveMenu.setForeground(Color.white);
-        moveMenu.setFont(new Font("Heveltica", Font.PLAIN, 30));
-        moveMenu.setPreferredSize(new Dimension(400, 100));
+        moveMenu.setForeground(theme);
+        moveMenu.setFont(new Font("Heveltica", Font.BOLD, 30));
+        moveMenu.setPreferredSize(new Dimension(400, 88));
 
         // compose the settings panel and add within a grouping panel for easy formatting
         settings.add(moveMenu);
@@ -69,6 +72,8 @@ public class GameBoard {
         JPanel sPanel = new JPanel();
         sPanel.add(settings);
         sPanel.setBackground(grey);
+        sPanel.setBorder(BorderFactory.createLineBorder(theme, 5));
+
 
         // put the settings panel on the east
         container.add(BorderLayout.EAST, sPanel);
@@ -649,6 +654,8 @@ public class GameBoard {
         h1.add(hOne);
         h1.addMouseListener(new MouseClickListener(h1));
         board.add(h1);
+
+        board.setBorder(BorderFactory.createRaisedBevelBorder());
         
 
         quit.addActionListener( e -> {

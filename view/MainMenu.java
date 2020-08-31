@@ -31,7 +31,7 @@ public class MainMenu {
         newGame.setForeground(Color.BLACK);
 
         JButton options = new JButton("Options");
-        options.setFont(new Font("Heveltica", Font.PLAIN, 30));
+        options.setFont(new Font("Heveltica", Font.HANGING_BASELINE, 30));
         options.setForeground(Color.gray);
 
         panel.add(newGame);
