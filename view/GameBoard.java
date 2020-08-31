@@ -28,10 +28,16 @@ public class GameBoard {
     }
 
     public void init() {
+
+        // play window theme colors
+        Color grey = new Color(70,70,70);
+        Color theme = new Color(144,166,169);
+
         // primary container
         Container container = window.getContentPane();
 
         JPanel settings = new JPanel();
+        settings.setBackground(grey);
         settings.setPreferredSize(new Dimension(400, 800));
 
         // settings buttons
@@ -39,6 +45,7 @@ public class GameBoard {
         JButton newGame = new JButton("New Game");
         JButton options = new JButton("Options");
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(grey);
         buttonPanel.add(quit);
         buttonPanel.add(newGame);
         buttonPanel.add(options);
@@ -51,6 +58,7 @@ public class GameBoard {
 
         // label for the move list
         JLabel moveMenu = new JLabel("Move History",SwingConstants.CENTER);
+        moveMenu.setForeground(Color.white);
         moveMenu.setFont(new Font("Heveltica", Font.PLAIN, 30));
         moveMenu.setPreferredSize(new Dimension(400, 100));
 
@@ -60,6 +68,7 @@ public class GameBoard {
         settings.add(BorderLayout.SOUTH, buttonPanel);
         JPanel sPanel = new JPanel();
         sPanel.add(settings);
+        sPanel.setBackground(grey);
 
         // put the settings panel on the east
         container.add(BorderLayout.EAST, sPanel);
@@ -67,20 +76,24 @@ public class GameBoard {
         JPanel spacer = new JPanel();
         spacer.setPreferredSize(new Dimension(50, 800));
         container.add(BorderLayout.WEST, spacer);
+        spacer.setBackground(theme);
 
         JPanel playPanel = new JPanel();
         playPanel.setPreferredSize(new Dimension(700, 800));
         container.add(BorderLayout.CENTER, playPanel);
+        playPanel.setBackground(theme);
 
         JPanel p1 = new JPanel();
         p1.setPreferredSize(new Dimension(600, 100));
+        p1.setBackground(theme);
         JPanel p2 = new JPanel();
         p2.setPreferredSize(new Dimension(600, 100));
-
+        p2.setBackground(theme);
 
         JPanel board = new JPanel();
         board.setPreferredSize(new Dimension(600, 600));
         board.setLayout(new GridLayout(8,8));
+        board.setBackground(theme);
         
 
         playPanel.add(BorderLayout.NORTH, p2);
@@ -89,8 +102,8 @@ public class GameBoard {
 
 
         // colors for the squares
-        Color darkSquares = new Color(40, 90, 0, 200);
-        Color lightSquares = new Color(240, 227, 200, 200);
+        Color darkSquares = new Color(40, 90, 0);
+        Color lightSquares = new Color(240, 227, 200);
 
         // all of my chess pieces!
         ImageIcon blackPawn = new ImageIcon("assets/BlackPawn.png");
@@ -121,18 +134,20 @@ public class GameBoard {
         // panels
         JPanel p1Captured = new JPanel();
         p1Captured.setPreferredSize(space);
-        p1Captured.setBackground(Color.lightGray);
+        p1Captured.setBackground(theme);
         p1Captured.add(captures);
         JPanel p2Captured = new JPanel();
         p2Captured.setPreferredSize(space);
-        p2Captured.setBackground(Color.lightGray);
+        p2Captured.setBackground(theme);
         p2Captured.add(captures2);
 
 
         JPanel u1 = new JPanel();
         u1.setPreferredSize(u);
+        u1.setBackground(theme);
         JPanel u2 = new JPanel();
         u2.setPreferredSize(u);
+        u2.setBackground(theme);
 
         user1.setIcon(user);
         user2.setIcon(user);
