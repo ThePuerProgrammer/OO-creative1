@@ -115,8 +115,8 @@ public class GameBoard {
         // Labels
         JLabel user1 = new JLabel("Player 1");
         JLabel user2 = new JLabel("Player 2");
-        JLabel captures = new JLabel("Captured Pieces");
-        JLabel captures2 = new JLabel("Captured Pieces");
+        JLabel captures = new JLabel("Captured Black Pieces");
+        JLabel captures2 = new JLabel("Captured White Pieces");
 
         // panels
         JPanel p1Captured = new JPanel();
