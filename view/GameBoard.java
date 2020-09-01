@@ -27,6 +27,8 @@ public class GameBoard {
     JFrame window = new JFrame();
     Clock clock;
     static int turnCounter = 0;
+    static boolean whitesTurn = true;
+    static JTextArea moveList = new JTextArea();
 
     public GameBoard(JFrame window, Clock clock) {
         turnCounter = 0;
@@ -54,8 +56,6 @@ public class GameBoard {
             lightSquares = new Color(228,226,225);
         }
 
-
-
         // primary container
         Container container = window.getContentPane();
 
@@ -74,12 +74,13 @@ public class GameBoard {
         buttonPanel.add(options);
 
         // move list text area
-        JTextArea moveList = new JTextArea();
         moveList.setBackground(Color.lightGray);
         moveList.setBorder(BorderFactory.createLoweredBevelBorder());
         JScrollPane scrollPane = new JScrollPane(moveList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setPreferredSize(new Dimension(400, 600));
+
+        moveList.setText("White's Turn");
 
         // label for the move list
         JLabel moveMenu = new JLabel("Move History",SwingConstants.CENTER);
@@ -783,5 +784,21 @@ public class GameBoard {
 
     static public void advanceTurnCounter() {
         turnCounter++;
+    }
+
+    static public void setWhitesTurn(boolean b) {
+        whitesTurn = b;
+    }
+
+    static public boolean getWhitesTurn() {
+        return whitesTurn;
+    }
+
+    static public void write(String s) {
+        moveList.setText(s);
+    }
+
+    static public String read() {
+        return moveList.getText();
     }
 }

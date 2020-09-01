@@ -18,8 +18,6 @@ public class MouseClickListener implements MouseInputListener {
     static ArrayList<String> moves = new ArrayList<String>();
     static ImageIcon temp;
     String square = "";
-    Boolean kingInCheck = false;
-    int posOfKing = 0;
 
     Color prev = new Color(0,0,0,0);
 
@@ -173,6 +171,70 @@ public class MouseClickListener implements MouseInputListener {
 
             if (moves.size() > 1) {
                 GameBoard.advanceTurnCounter();
+                Boolean rightPiece = true;
+                String current = moves.get(0);
+                int cur = Board.notationToInteger(current);
+                if (GameBoard.getWhitesTurn()) {
+                    rightPiece = Board.isWhite(cur);
+                } else {
+                    rightPiece = Board.isBlack(cur);
+                }
+                if (!rightPiece) {
+                    GameBoard.write(GameBoard.read() + "\nINVALID SELCETION");
+                    moves.clear();
+                    return;
+                }
+                boolean valid = false;
+                String next = moves.get(1);
+                int nx = Board.notationToInteger(next);
+                valid = Board.validMove(cur, nx);
+                if (!valid) {
+                    GameBoard.write(GameBoard.read() + "\nINVALID MOVE");
+                    moves.clear();
+                    return;
+                }
+                ArrayList<Object[]> snap = Board.snapshot();
+                Board.updateBoard(cur, nx);
+                int posOfKing = Board.positionOfKing(GameBoard.getWhitesTurn());
+                if (GameBoard.getWhitesTurn()) {
+                    if (Board.kInCheck(posOfKing)) {
+                        Board.resetMove(snap);
+                        GameBoard.write(GameBoard.read() + "\nInvalid Move! King in check!");
+                        return;
+                    }
+                    Board.blackCap((String)snap.get(nx)[2]);
+                    GameBoard.setWhitesTurn(false);
+                } else {
+                    if (Board.kInCheck(posOfKing)) {
+                        Board.resetMove(snap);
+                        GameBoard.write(GameBoard.read() + "\nInvalid Move! King in check!");
+                        return;
+                    }
+                    Board.whiteCap((String)snap.get(nx)[2]);
+                    GameBoard.setWhitesTurn(true);
+                }
+                posOfKing = Board.positionOfKing(GameBoard.getWhitesTurn());
+                if (GameBoard.getWhitesTurn()) { // white's turn
+                    GameBoard.write(GameBoard.read() + "\nWhite's Turn");
+                    if (Board.kInCheck(posOfKing)) {
+                        if (Board.inCheckmate(posOfKing, Board.getAttackers())) {
+                            GameBoard.write(GameBoard.read() + "\nCheckmate! Black Wins!");
+                        } else { 
+                            GameBoard.write(GameBoard.read() + "\nWhite King in check!");
+                        }
+                    }
+                } else { // blacks turn
+                    GameBoard.write(GameBoard.read() + "\nBlack's Turn");
+                    if (Board.kInCheck(posOfKing)) {
+                        if (Board.inCheckmate(posOfKing, Board.getAttackers())) {
+                            GameBoard.write(GameBoard.read() + "\nCheckmate! White Wins!");
+                        } else {
+                            GameBoard.write(GameBoard.read() + "\nBlack King in check!");
+                        }
+                    }
+
+                }
+                moves.clear();
             }
         }
     }
@@ -186,9 +248,7 @@ public class MouseClickListener implements MouseInputListener {
 
         // test if jL is empty square
         // reset color if true
-        if (jL.getIcon() == null) {
-            panel.setBackground(prev);
-        }
+        panel.setBackground(prev);
     }
 
     @Override

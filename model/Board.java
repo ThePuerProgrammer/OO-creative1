@@ -10,37 +10,37 @@ import java.util.ArrayList;
 
 public class Board {
 
-    ArrayList<String> whiteCaptured = new ArrayList<String>();
-    ArrayList<String> blackCaptured = new ArrayList<String>();
-    ArrayList<Object[]> squares = new ArrayList<Object[]>();    
-    ArrayList<Integer> posOfAttackers = new ArrayList<Integer>();
-    ArrayList<Integer> activeWhite = new ArrayList<Integer>();
-    ArrayList<Integer> activeBlack = new ArrayList<Integer>();
+    static ArrayList<String> whiteCaptured = new ArrayList<String>();
+    static ArrayList<String> blackCaptured = new ArrayList<String>();
+    static ArrayList<Object[]> squares = new ArrayList<Object[]>();    
+    static ArrayList<Integer> posOfAttackers = new ArrayList<Integer>();
+    static ArrayList<Integer> activeWhite = new ArrayList<Integer>();
+    static ArrayList<Integer> activeBlack = new ArrayList<Integer>();
 
-    Boolean kingInCheck = false;
+    static Boolean kingInCheck = false;
     static Boolean checkmate = false;
-    Boolean wRrookMoved = false;
-    Boolean wLrookMoved = false;
-    Boolean wkingMoved = false;
-    Boolean bRrookMoved = false;
-    Boolean bLrookMoved = false;
-    Boolean bkingMoved = false;
+    static Boolean wRrookMoved = false;
+    static Boolean wLrookMoved = false;
+    static Boolean wkingMoved = false;
+    static Boolean bRrookMoved = false;
+    static Boolean bLrookMoved = false;
+    static Boolean bkingMoved = false;
 
-    int posOfWK = 4;
-    int posOfBK = 60;
+    static int posOfWK = 4;
+    static int posOfBK = 60;
 
-    String wK = "♔"; // ♖♘♗♕♔♙
-    String wQ = "♕";
-    String wR = "♖";
-    String wB = "♗";
-    String wN = "♘";
-    String wP = "♙";
-    String bK = "♚"; // ♟♜♞♝♛♚
-    String bQ = "♛";
-    String bR = "♜";
-    String bB = "♝";
-    String bN = "♞";
-    String bP = "♟";
+    static String wK = "♔"; // ♖♘♗♕♔♙
+    static String wQ = "♕";
+    static String wR = "♖";
+    static String wB = "♗";
+    static String wN = "♘";
+    static String wP = "♙";
+    static String bK = "♚"; // ♟♜♞♝♛♚
+    static String bQ = "♛";
+    static String bR = "♜";
+    static String bB = "♝";
+    static String bN = "♞";
+    static String bP = "♟";
 
     public Board() {
     
@@ -105,21 +105,21 @@ public class Board {
         }
     } // Board()
 
-    public void whiteCap(String s) {
+    static public void whiteCap(String s) {
         if (s == " ") return;
         else whiteCaptured.add(s);
     } // whiteCap()
 
-    public void blackCap(String s) {
+    static public void blackCap(String s) {
         if (s == " ") return;
         else blackCaptured.add(s);
     } // blackCap()
 
-    public Object[] getSquare(int n) {
+    static public Object[] getSquare(int n) {
         return squares.get(n);
     }
 
-    public void updateBoard(int current, int next) {
+    static public void updateBoard(int current, int next) {
 
         // get [file, rank, piece] from ArrayList squares
         Object[] currentSquare = squares.get(current);
@@ -136,7 +136,7 @@ public class Board {
         squares.set(current, currentSquare);
     }
 
-    public int positionOfKing(Boolean isWhite) {
+    static public int positionOfKing(Boolean isWhite) {
         String kingColor = isWhite ? wK : bK;
         for (int i = 0; i < 64; ++i) {
             Object[] temp = squares.get(i);
@@ -146,7 +146,7 @@ public class Board {
         return 0;
     }
 
-    public int selectedSquare(int square) {
+    static public int selectedSquare(int square) {
 
         Object[] temp = squares.get(square);
         String s = (String)temp[2];
@@ -169,7 +169,7 @@ public class Board {
         return 0;
     }
 
-    public Boolean validMove(int cur, int next) {
+    static public Boolean validMove(int cur, int next) {
         int piece = selectedSquare(cur);
         switch (piece) {
             case 1: return validKMove(cur, next);
@@ -188,7 +188,7 @@ public class Board {
         }
     }
 
-    public boolean validKMove(int cur, int next) {
+    static public boolean validKMove(int cur, int next) {
         boolean kingMoved;
         boolean lRookMoved;
         boolean rRookMoved;
@@ -326,7 +326,7 @@ public class Board {
         return true;
     }
 
-    public boolean validQMove(int cur, int next) {
+    static public boolean validQMove(int cur, int next) {
         // if theres a piece of same color on the chosen square to move to
         if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
         if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
@@ -382,7 +382,7 @@ public class Board {
         return true;
     }
 
-    public boolean validRMove(int cur, int next) {
+    static public boolean validRMove(int cur, int next) {
         // if theres a piece of same color on the chosen square to move to
         if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
         if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
@@ -419,7 +419,7 @@ public class Board {
         return true;
     }
 
-    public boolean validBMove(int cur, int next) {
+    static public boolean validBMove(int cur, int next) {
         if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
         if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
     
@@ -448,7 +448,7 @@ public class Board {
         return true;
     }
 
-    public boolean validNMove(int cur, int next) {
+    static public boolean validNMove(int cur, int next) {
         // if theres a piece of same color on the chosen square to move to
         if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
         if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
@@ -472,7 +472,7 @@ public class Board {
         return true;
     }
 
-    public boolean validPMove(int cur, int next) {
+    static public boolean validPMove(int cur, int next) {
         // if theres a piece of same color on the chosen square to move to
         if (selectedSquare(next) < 0 && selectedSquare(cur) < 0) return false;
         if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
@@ -512,7 +512,7 @@ public class Board {
         return true;
     }
 
-    public boolean isEdgeOfBoard(int square) {
+    static public boolean isEdgeOfBoard(int square) {
         return square == 0 || square == 7 || square == 8 || square == 15 ||
                square == 16 || square == 23 || square == 24 || square == 31 ||
                square == 32 || square == 39 || square == 40 || square == 47 ||
@@ -521,7 +521,7 @@ public class Board {
 
     // returns true if k in check (can be used when moving K, hense "next"
     // or when attacking K)
-    public boolean kInCheck(int king) {
+    static public boolean kInCheck(int king) {
         boolean check = false;
         String K;
         String Q;
@@ -908,7 +908,7 @@ public class Board {
         return check;
     }
 
-    public boolean inCheckmate(int posOfKing, ArrayList<Integer> attackers) {
+    static public boolean inCheckmate(int posOfKing, ArrayList<Integer> attackers) {
         int tempWK = posOfWK;
         int tempBK = posOfBK;
         // reset all active pieces on board
@@ -996,7 +996,7 @@ public class Board {
         } else return inCM;
     }
 
-    public int notationToInteger(String s) {
+    static public int notationToInteger(String s) {
         String square = s.toLowerCase(); 
 
         
@@ -1077,27 +1077,27 @@ public class Board {
         return -1;
     }
 
-    public boolean isWhite(int square) {
+    static public boolean isWhite(int square) {
         Object[] temp = squares.get(square);
         String s = (String)temp[2];
         return s == wR || s == wN || s == wB || s == wQ || s == wK || s == wP;
     }
 
-    public boolean isBlack(int square) {
+    static public boolean isBlack(int square) {
         Object[] temp = squares.get(square);
         String s = (String)temp[2];
         return s == bR || s == bN || s == bB || s == bQ || s == bK || s == bP;
     }
 
-    public ArrayList<Integer> getAttackers() {
+    static public ArrayList<Integer> getAttackers() {
         return posOfAttackers;
     }
     
-    public void resetAttackers() {
+    static public void resetAttackers() {
         posOfAttackers.clear();
     }
     
-    public void isActive() {
+    static public void isActive() {
         activeWhite.clear();
         activeBlack.clear();
         for (int i = 0; i < 64; ++i) {
@@ -1112,11 +1112,11 @@ public class Board {
         return checkmate;
     }
     
-    public ArrayList<Object[]> snapshot() {
+    static public ArrayList<Object[]> snapshot() {
         return squares;
     }
     
-    public void resetMove(ArrayList<Object[]> previous) {
+    static public void resetMove(ArrayList<Object[]> previous) {
         squares = previous;
     }
 }
