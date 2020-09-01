@@ -12,6 +12,8 @@ import javax.swing.SwingConstants;
 
 import controller.MouseClickListener;
 
+import model.Clock;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
@@ -21,8 +23,10 @@ import java.awt.Color;
 
 public class GameBoard {
     JFrame window = new JFrame();
+    Clock clock;
 
-    public GameBoard(JFrame window) {
+    public GameBoard(JFrame window, Clock clock) {
+        this.clock = clock;
         this.window = window;
         window.setPreferredSize(new Dimension(1200,850));
         window.setTitle("Play Wimpy Chess");
@@ -677,7 +681,7 @@ public class GameBoard {
             // required to fix MainMenu sizing bug!
             window.setPreferredSize(null);
 
-            var optionsMenu = new OptionsMenu(window);
+            var optionsMenu = new OptionsMenu(window, clock);
             optionsMenu.init();
             window.pack();
             window.setLocationRelativeTo(null); 
@@ -686,7 +690,7 @@ public class GameBoard {
 
         newGame.addActionListener( e -> {
             window.getContentPane().removeAll();
-            var gameBoard = new GameBoard(window);
+            var gameBoard = new GameBoard(window, clock);
             gameBoard.init();
             window.pack();
             window.setLocationRelativeTo(null); 

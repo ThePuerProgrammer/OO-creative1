@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import model.Clock;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -16,10 +18,12 @@ import java.awt.Color;
 public class OptionsMenu {
     static double saveTime = 0.0;
     double tempTime = saveTime;
+    Clock clock;
 
     JFrame window = new JFrame();
 
-    public OptionsMenu(JFrame window) {
+    public OptionsMenu(JFrame window, Clock clock) {
+        this.clock = clock;
         this.window = window;
         window.setTitle("Options");
     }
@@ -219,6 +223,7 @@ public class OptionsMenu {
             window.setLocationRelativeTo(null); 
             window.revalidate();
             saveTime = tempTime;
+            clock.updateClock(saveTime);
         });
     }
 

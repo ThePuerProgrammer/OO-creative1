@@ -1,12 +1,14 @@
 package model;
 
-import javax.swing.Timer;
-
 public class Clock {
-    double whiteClock = 0;
-    double blackClock = 0;
+    double whiteClock = 10.0;
+    double blackClock = 10.0;
 
     public Clock(double timeLimit) {
+        whiteClock = blackClock = timeLimit;
+    }
+
+    public void updateClock(double timeLimit) {
         whiteClock = blackClock = timeLimit;
     }
 }

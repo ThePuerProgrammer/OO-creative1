@@ -119,7 +119,7 @@ public class Board {
         return squares.get(n);
     }
 
-    public void update_board(int current, int next) {
+    public void updateBoard(int current, int next) {
 
         // get [file, rank, piece] from ArrayList squares
         Object[] currentSquare = squares.get(current);
@@ -953,7 +953,7 @@ public class Board {
                         ArrayList<Object[]> temp; // vector not string!
                         if (validMove(active.get(j), i)) {
                             temp = squares;
-                            update_board(active.get(j), i); 
+                            updateBoard(active.get(j), i); 
                         } else continue;
 
                         if (!kInCheck(w ? posOfWK : posOfBK)) {
@@ -973,7 +973,7 @@ public class Board {
                         ArrayList<Object[]> temp; // vector not string!
                         if (validMove(active.get(j), i)) {
                             temp = squares;
-                            update_board(active.get(j), i); 
+                            updateBoard(active.get(j), i); 
                         } else continue;
 
                         if (!kInCheck(w ? posOfWK : posOfBK)) {

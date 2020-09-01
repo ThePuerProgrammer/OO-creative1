@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import model.Clock;
+
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
@@ -13,7 +15,9 @@ import java.awt.Font;
 import java.awt.Color;
 
 public class MainMenu {
+    double timeLimit = 10.0;
     JFrame window = new JFrame();
+    Clock clock = new Clock(timeLimit);
 
     public MainMenu(JFrame window) {
         this.window = window;
@@ -41,7 +45,7 @@ public class MainMenu {
 
         newGame.addActionListener( e -> {
             window.getContentPane().removeAll();
-            var gameBoard = new GameBoard(window);
+            var gameBoard = new GameBoard(window, clock);
             gameBoard.init();
             window.pack();
             window.setLocationRelativeTo(null); 
@@ -50,7 +54,7 @@ public class MainMenu {
 
         options.addActionListener( e -> {
             window.getContentPane().removeAll();
-            var optionsMenu = new OptionsMenu(window);
+            var optionsMenu = new OptionsMenu(window, clock);
             optionsMenu.init();
             window.pack();
             window.setLocationRelativeTo(null); 
