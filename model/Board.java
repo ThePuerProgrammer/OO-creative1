@@ -25,6 +25,10 @@ public class Board {
     static Boolean bRrookMoved = false;
     static Boolean bLrookMoved = false;
     static Boolean bkingMoved = false;
+    static boolean wKingside = false;
+    static boolean bKingside = false;
+    static boolean wQueenside = false;
+    static boolean bQueenside = false;
 
     static int posOfWK = 4;
     static int posOfBK = 60;
@@ -240,6 +244,7 @@ public class Board {
                 posOfBK = next;
                 bkingMoved = true;
                 bLrookMoved = true;
+                bQueenside = true;
                 return true;
             } else {
                 for (int i = cur - 1; i > 0; --i)
@@ -258,6 +263,7 @@ public class Board {
                 posOfWK = next;
                 wkingMoved = true;
                 wLrookMoved = true;
+                wQueenside = true;
                 return true;
             }
         } else if ((!kingMoved && !rRookMoved) && ((cur == 4 && next == 6) ||
@@ -280,6 +286,7 @@ public class Board {
                 posOfBK = next;
                 bkingMoved = true;
                 bRrookMoved = true;
+                bKingside = true;
                 return true;
             } else {
                 for (int i = cur + 1; i < 7; ++i)
@@ -298,6 +305,7 @@ public class Board {
                 posOfWK = next;
                 wkingMoved = true;
                 wRrookMoved = true;
+                wKingside = true;
                 return true;
             }
         } else if ((kingMoved || lRookMoved) && ((cur == 4 && next == 2) ||
@@ -1118,5 +1126,34 @@ public class Board {
     
     static public void resetMove(ArrayList<Object[]> previous) {
         squares = previous;
+    }
+
+    static public void setWKingsideToFalse() {
+        wKingside = false;
+    }
+    static public void setBKingsideToFalse() {
+        wKingside = false;
+    }
+    static public void setWQueensideToFalse() {
+        wKingside = false;
+    }
+    static public void setBQueensideToFalse() {
+        wKingside = false;
+    }
+
+    static public boolean validWKingside() {
+        return wKingside;
+    }
+
+    static public boolean validWQueenside() {
+        return wQueenside;
+    }
+
+    static public boolean validBKingside() {
+        return bKingside;
+    }
+
+    static public boolean validBQueenside() {
+        return bQueenside;
     }
 }

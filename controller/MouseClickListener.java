@@ -171,6 +171,10 @@ public class MouseClickListener implements MouseInputListener {
 
             if (moves.size() > 1) {
                 GameBoard.advanceTurnCounter();
+                Board.setBKingsideToFalse();
+                Board.setWKingsideToFalse();
+                Board.setBQueensideToFalse();
+                Board.setWQueensideToFalse();
                 Boolean rightPiece = true;
                 String current = moves.get(0);
                 int cur = Board.notationToInteger(current);
@@ -180,7 +184,7 @@ public class MouseClickListener implements MouseInputListener {
                     rightPiece = Board.isBlack(cur);
                 }
                 if (!rightPiece) {
-                    GameBoard.write(GameBoard.read() + "\nINVALID SELCETION");
+                    GameBoard.write(GameBoard.read() + "\nINVALID SELECTION");
                     moves.clear();
                     return;
                 }
@@ -215,7 +219,7 @@ public class MouseClickListener implements MouseInputListener {
                 }
                 GameBoard.write(GameBoard.read() + "\n" + moves.get(0) + " -> " + moves.get(1));
                 GameBoard.addMoves(moves);
-                // GameBoard.updateBoard();
+                GameBoard.updateBoard();
                 posOfKing = Board.positionOfKing(GameBoard.getWhitesTurn());
                 if (GameBoard.getWhitesTurn()) { // white's turn
                     if (Board.kInCheck(posOfKing)) {
@@ -245,13 +249,6 @@ public class MouseClickListener implements MouseInputListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
-        // extract JLabel from JPanel using a cast
-        // solution source https://stackoverflow.com/questions/35872196/java-accessing-jlabel-inside-jpanel
-        JLabel jL = (JLabel)panel.getComponent(0);
-
-        // test if jL is empty square
-        // reset color if true
         panel.setBackground(prev);
     }
 
