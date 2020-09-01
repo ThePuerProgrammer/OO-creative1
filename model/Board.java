@@ -18,7 +18,7 @@ public class Board {
     ArrayList<Integer> activeBlack = new ArrayList<Integer>();
 
     Boolean kingInCheck = false;
-    Boolean checkmate = false;
+    static Boolean checkmate = false;
     Boolean wRrookMoved = false;
     Boolean wLrookMoved = false;
     Boolean wkingMoved = false;
@@ -44,8 +44,8 @@ public class Board {
 
     public Board() {
     
-        int[] rank = new int[8];
-        for (int i = 0; i < 9; ++i)
+        int[] rank = new int[9];
+        for (int i = 0; i < 9; i++)
             rank[i] = i + 1;
     
         char[] file = new char[8];
@@ -1108,7 +1108,7 @@ public class Board {
         }
     }
 
-    public boolean gameOver() {
+    static public boolean gameOver() {
         return checkmate;
     }
     

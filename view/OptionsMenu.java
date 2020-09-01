@@ -31,17 +31,51 @@ public class OptionsMenu {
     public void init() {
         Container container = window.getContentPane();
 
-        JLabel header = new JLabel("Select Time Limit", SwingConstants.CENTER);
-        header.setFont(new Font("Heveltica", Font.PLAIN, 24));
-        container.add(BorderLayout.NORTH, header);
+
 
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(500, 300));
         panel.setLayout(new GridLayout(3,3));
 
+        JPanel group = new JPanel();
+        group.setPreferredSize(new Dimension(500, 400));
+
+        JLabel header = new JLabel("Select Time Limit", SwingConstants.CENTER);
+        header.setFont(new Font("Heveltica", Font.PLAIN, 24));
+        group.add(BorderLayout.NORTH, header);
+        group.add(BorderLayout.CENTER, panel);
+
         JPanel south = new JPanel();
         south.setPreferredSize(new Dimension(500, 30));
         south.setLayout(new GridLayout(1,2));
+
+        JPanel east = new JPanel();
+        east.setPreferredSize(new Dimension(100, 300));
+        east.setLayout(new GridLayout(2, 1));
+
+        JLabel theme = new JLabel("Theme", SwingConstants.CENTER);
+        theme.setFont(new Font("Heveltica", Font.PLAIN, 24));
+        theme.setPreferredSize(new Dimension(100,30));
+
+        JPanel group2 = new JPanel();
+        group2.setPreferredSize(new Dimension(100, 400));
+
+        group2.add(BorderLayout.NORTH, theme);
+        group2.add(BorderLayout.CENTER, east);
+
+        JButton marble = new JButton("Marble");
+        JButton tournament = new JButton("Tournament");
+
+        if (GameBoard.getTheme() == "marble") {
+            marble.setForeground(Color.RED);
+            tournament.setForeground(Color.BLACK);
+        } else {
+            marble.setForeground(Color.BLACK);
+            tournament.setForeground(Color.RED);
+        }
+
+        east.add(marble);
+        east.add(tournament);
 
         JButton cancel = new JButton("Cancel");
         JButton save = new JButton("Save");
@@ -69,8 +103,9 @@ public class OptionsMenu {
         panel.add(sixty);
         panel.add(twohrs);
 
-        container.add(BorderLayout.CENTER, panel);
+        container.add(BorderLayout.CENTER, group);
         container.add(BorderLayout.SOUTH, south);
+        container.add(BorderLayout.EAST, group2);
 
         // set selected time based on previous save value
         switch ((int)saveTime) {
@@ -203,6 +238,18 @@ public class OptionsMenu {
             sixty.setForeground(Color.BLACK);
             twohrs.setForeground(Color.RED);
             tempTime = 120.0;
+        });
+
+        marble.addActionListener( e -> {
+            marble.setForeground(Color.RED);
+            tournament.setForeground(Color.BLACK);
+            GameBoard.setTheme("marble");
+        });
+
+        tournament.addActionListener( e -> {
+            marble.setForeground(Color.BLACK);
+            tournament.setForeground(Color.RED);
+            GameBoard.setTheme("tournament");
         });
 
 
