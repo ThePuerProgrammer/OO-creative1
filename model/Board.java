@@ -13,6 +13,9 @@ public class Board {
     ArrayList<String> whiteCaptured = new ArrayList<String>();
     ArrayList<String> blackCaptured = new ArrayList<String>();
     ArrayList<Object[]> squares = new ArrayList<Object[]>();    
+    ArrayList<Integer> posOfAttackers = new ArrayList<Integer>();
+    ArrayList<Integer> activeWhite = new ArrayList<Integer>();
+    ArrayList<Integer> activeBlack = new ArrayList<Integer>();
 
     Boolean kingInCheck = false;
     Boolean checkmate = false;
@@ -193,13 +196,9 @@ public class Board {
         // collect [file,rank,piece] for current and next square
         Object[] objNext = squares.get(next);
         char fileNext = (char)objNext[0];
-        int rankNext = (int)objNext[1];
-        String pieceNext = (String)objNext[2];
 
         Object[] objCur  = squares.get(cur);
         char fileCur = (char)objCur[0];
-        int rankCur = (int)objCur[1];
-        String pieceCur = (String)objCur[2];
 
         // if theres a white piece on the chosen square to move to
         if (selectedSquare(next) > 0 && selectedSquare(cur) > 0) return false;
@@ -520,6 +519,483 @@ public class Board {
                square == 48 || square == 55 || square == 56 || square == 63;
     }
 
+    // returns true if k in check (can be used when moving K, hense "next"
+    // or when attacking K)
+    public boolean kInCheck(int king) {
+        boolean check = false;
+        String K;
+        String Q;
+        String R;
+        String B;
+        String N;
+        String P;
+        String eK;
+        String eQ;
+        String eR;
+        String eB;
+        String eN;
+        String eP;
+
+        // make universal for black and white. 
+        // white king
+        if (selectedSquare(king) > 0) {
+            K = wK;
+            Q = wQ;
+            R = wR;
+            B = wB;
+            N = wN;
+            P = wP;
+            eK = bK;
+            eQ = bQ;
+            eR = bR;
+            eB = bB;
+            eN = bN;
+            eP = bP;
+        } else if (selectedSquare(king) < 0){ // king is black
+            K = bK;
+            Q = bQ;
+            R = bR;
+            B = bB;
+            N = bN;
+            P = bP;
+            eK = wK;
+            eQ = wQ;
+            eR = wR;
+            eB = wB;
+            eN = wN;
+            eP = wP;
+        } else { // king not on square
+            System.out.println("King not found in pos.");
+            return false;
+        }
+
+        // the knight conditions controlling for board wraps
+        Object[] kingObject = squares.get(king);
+        char c = (char)kingObject[0];
+        int i = (int)kingObject[1];
+        String s = (String)kingObject[2];
+
+        if (c == 'a') {
+            // if king is on A file
+            // no left side knight attacks possible
+            // if value is valid board position and contains a knight. simple
+            if (king - 15 >= 0) if (squares.get(king - 15)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 15);
+            }
+            if (king -  6 >= 0) if (squares.get(king - 6)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 6);
+            }
+            if (king + 10 < 64) if (squares.get(king + 10)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 10);
+            }
+            if (king + 17 < 64) if (squares.get(king + 17)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 17);
+            }
+        } else if (c == 'b') { 
+            // king on B file
+            if (king - 15 >= 0) if (squares.get(king - 15)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 15);
+            }
+            if (king -  6 >= 0) if (squares.get(king - 6)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 6);
+            }
+            if (king + 10 < 64) if (squares.get(king + 10)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 10);
+            }
+            if (king + 17 < 64) if (squares.get(king + 17)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 17);
+            }
+
+            if (king - 17 >= 0) if (squares.get(king - 17)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 17);
+            }
+            if (king + 15 < 64) if (squares.get(king + 15)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 15);
+            }
+        } else if (c == 'h') {
+            // no right side knight attacks possible
+            if (king - 17 >= 0) if (squares.get(king - 17)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 17);
+            }
+            if (king - 10 >= 0) if (squares.get(king - 10)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 10);
+            }
+            if (king +  6 < 64) if (squares.get(king + 6)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 6);
+            }
+            if (king + 15 < 64) if (squares.get(king + 15)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 15);
+            }
+        } else if (c == 'g') { 
+            // king on G file
+            if (king - 17 >= 0) if (squares.get(king - 17)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 17);
+            }
+            if (king - 10 >= 0) if (squares.get(king - 10)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 10);
+            }
+            if (king +  6 < 64) if (squares.get(king + 6)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 6);
+            }
+            if (king + 15 < 64) if (squares.get(king + 15)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 15);
+            }
+            if (king - 15 >= 0) if (squares.get(king - 15)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 15);
+            }
+            if (king + 17 < 64) if (squares.get(king + 17)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 17);
+            }
+        } else {
+            if (king - 15 >= 0) if (squares.get(king - 15)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 15);
+            }
+            if (king -  6 >= 0) if (squares.get(king - 6)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 6);
+            }
+            if (king + 10 < 64) if (squares.get(king + 10)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 10);
+            }
+            if (king + 17 < 64) if (squares.get(king + 17)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 17);
+            }
+            if (king - 17 >= 0) if (squares.get(king - 17)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 17);
+            }
+            if (king - 10 >= 0) if (squares.get(king - 10)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king - 10);
+            }
+            if (king +  6 < 64) if (squares.get(king + 6)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 6);
+            }
+            if (king + 15 < 64) if (squares.get(king + 15)[2] == eN) {
+                check = true;
+                posOfAttackers.add(king + 15);
+            }
+        }
+
+        int temp = king + 1;
+        int searchLength = 0;
+
+        String sTemp = " ";
+
+        // in check from the right
+        while (!isEdgeOfBoard(temp - 1) && temp < 64) {
+            sTemp = (String)squares.get(temp)[2]; 
+            ++searchLength;
+            // square has white piece in path or non-attacking black piece
+            if (sTemp == K || sTemp == Q || 
+                sTemp == R || sTemp == B ||
+                sTemp == N || sTemp == P ||
+                sTemp == eP || sTemp == eN ||
+                sTemp == eB) 
+                break;
+            if (sTemp == eQ || sTemp == eR) {
+                check = true;
+                posOfAttackers.add(temp);
+            }
+            if (searchLength == 1 && sTemp == eK) {
+                check = true;
+                posOfAttackers.add(temp);
+            }
+            ++temp;
+        }
+
+        searchLength = 0;
+        temp = king + 9;
+
+        // in check from top-right-diagonal
+        while ((!isEdgeOfBoard(temp - 1) ||
+                isEdgeOfBoard(king)) && temp < 64) {
+            sTemp = (String)squares.get(temp)[2];
+            ++searchLength;
+            if (sTemp == K || sTemp == Q || 
+                sTemp == R || sTemp == B ||
+                sTemp == N || sTemp == P ||
+                sTemp == eR || sTemp == eN)
+                break;
+            if (sTemp == eQ || sTemp == eB) {
+                posOfAttackers.add(temp);
+                check = true;
+            }
+            if (searchLength == 1 && 
+            (sTemp == eK || sTemp == eP)) {
+                posOfAttackers.add(temp);
+                check = true; 
+            }
+            temp += 9;
+        }
+
+        // in check from above
+        searchLength = 0;
+        temp = king + 8;
+
+        while (temp < 64) {
+            sTemp = (String)squares.get(temp)[2];
+            ++searchLength;
+            if (sTemp == K || sTemp == Q || 
+                sTemp == R || sTemp == B ||
+                sTemp == N || sTemp == P ||
+                sTemp == eP || sTemp == eN ||
+                sTemp == eB)
+                break;
+            if (sTemp == eQ || sTemp == eR) {
+                posOfAttackers.add(temp);
+                check = true;
+            }
+            if (searchLength == 1 && sTemp == eK) {
+                posOfAttackers.add(temp);
+                check = true; 
+            }
+            temp += 8;
+        }
+
+        searchLength = 0;
+        temp = king + 7;
+
+        // in check from top-left-diagonal
+        while ((!isEdgeOfBoard(temp + 1) ||
+                isEdgeOfBoard(king)) && temp < 64) {
+            sTemp = (String)squares.get(temp)[2];
+            ++searchLength;
+            if (sTemp == K || sTemp == Q || 
+                sTemp == R || sTemp == B ||
+                sTemp == N || sTemp == P || 
+                sTemp == eR || sTemp == eN)
+                break;
+            if (sTemp == eQ || sTemp == eB) {
+                posOfAttackers.add(temp);
+                check = true;
+            }
+            if (searchLength == 1 && 
+            (sTemp == eK || sTemp == eP)) {
+                posOfAttackers.add(temp);
+                check = true; 
+            }
+            temp += 7;
+        }
+
+        searchLength = 0;
+        temp = king - 1;
+
+        // in check from the left
+        while (!isEdgeOfBoard(temp + 1) && temp >= 0) {
+            sTemp = (String)squares.get(temp)[2];
+            ++searchLength;
+            // square has white piece in path or non-attacking black piece
+            if (sTemp == K || sTemp == Q || 
+                sTemp == R || sTemp == B ||
+                sTemp == N || sTemp == P ||
+                sTemp == eP || sTemp == eN ||
+                sTemp == eB) 
+                break;
+            if (sTemp == eQ || sTemp == eR) {
+                posOfAttackers.add(temp);
+                check = true;
+            }
+            if (searchLength == 1 && sTemp == eK) {
+                posOfAttackers.add(temp);
+                check = true; 
+            }
+            --temp;
+        }
+
+        searchLength = 0;
+        temp = king - 9;
+
+        // in check from bottom-left-diagonal
+        while ((!isEdgeOfBoard(temp + 1) ||
+                isEdgeOfBoard(king)) && temp >= 0) {
+            sTemp = (String)squares.get(temp)[2];
+            ++searchLength;
+            // again, first condition checks for white piece
+            if (sTemp == K || sTemp == Q || 
+                sTemp == R || sTemp == B ||
+                sTemp == N || sTemp == P || 
+                sTemp == eR || sTemp == eN)
+                break;
+            if (sTemp == eQ || sTemp == eB) {
+                posOfAttackers.add(temp);
+                check = true;
+            }
+            if (searchLength == 1 && 
+                    (sTemp == eK || sTemp == eP)) {
+                posOfAttackers.add(temp);
+                check = true; 
+            }
+            temp -= 9;
+        }
+
+        searchLength = 0;
+        temp = king - 8;
+
+        // in check from bottom
+        while (temp >= 0) {
+            sTemp = (String)squares.get(temp)[2];
+            ++searchLength;
+            if (sTemp == K || sTemp == Q || 
+                sTemp == R || sTemp == B ||
+                sTemp == N || sTemp == P || 
+                sTemp == eP || sTemp == eN || 
+                sTemp == eB)
+                break;
+            if (sTemp == eQ || sTemp == eR) {
+                posOfAttackers.add(temp);
+                check = true;
+            }
+            if (searchLength == 1 && sTemp == eK) {
+                posOfAttackers.add(temp);
+                check = true; 
+            }
+            temp -= 8;
+        }
+
+        searchLength = 0;
+        temp = king - 7;
+
+        // in check from bottom-right-diagonal
+        while ((!isEdgeOfBoard(temp - 1) ||
+                isEdgeOfBoard(king)) && temp >= 0) {
+            sTemp = (String)squares.get(temp)[2];
+            ++searchLength;
+            // again, first condition checks for same color piece
+            if (sTemp == K || sTemp == Q || 
+                sTemp == R || sTemp == B ||
+                sTemp == N || sTemp == P || 
+                sTemp == eR || sTemp == eN) {
+
+                break;
+            }
+            if (sTemp == eQ || sTemp == eB) {
+                posOfAttackers.add(temp);
+                check = true;
+            }
+            if (searchLength == 1 &&
+            (sTemp == eK || sTemp == eP)) {
+                posOfAttackers.add(temp);
+                check = true; 
+            }
+            temp -= 7;
+        }
+
+        return check;
+    }
+
+    public boolean inCheckmate(int posOfKing, ArrayList<Integer> attackers) {
+        int tempWK = posOfWK;
+        int tempBK = posOfBK;
+        // reset all active pieces on board
+        isActive(); // all pieces currently on board
+
+        boolean w; // white
+
+        boolean inCM = true; // assumes yes first
+        ArrayList<Integer> active; // place for all current players on defenders side
+
+        // assign active to team in check for all pieces to be tested
+        if (isWhite(posOfKing)) {
+            active = activeWhite;
+            w = true;
+        } else {
+            w = false;
+            active = activeBlack;
+        }
+
+        for (int k = 0; k < attackers.size(); ++k) { // based off all attackers
+            
+            int val = 0;
+            int dif = java.lang.Math.abs(attackers.get(k) - posOfKing);
+            // neg slope diagonal
+            if (dif % 7 == 0) {
+                val = 7;
+            } else if (dif % 9 == 0) {
+                val = 9;
+            } else if (dif % 8 == 0) {
+                val = 8;
+            } else {
+                val = 1;
+            }
+            // we need something that tracks which pieces are still active
+            // then we can test moving each piece to every square in between 
+            // every attacker. 
+            // If the move takes player out of CM, inCM = false and break;
+            if (attackers.get(k) > posOfKing) {
+                // to check every square in between attackers
+                for (int i = attackers.get(k); i > posOfKing; i -= val) {
+                    for (int j = 0; j < active.size(); ++j) {
+                        ArrayList<Object[]> temp; // vector not string!
+                        if (validMove(active.get(j), i)) {
+                            temp = squares;
+                            update_board(active.get(j), i); 
+                        } else continue;
+
+                        if (!kInCheck(w ? posOfWK : posOfBK)) {
+                            inCM = false;
+                        }
+                        squares = temp;
+                        posOfBK = tempBK;
+                        posOfWK = tempWK;
+                        if (!inCM) break;
+                    }
+                    if (!inCM) break;
+                }
+            } else {
+                // checking every square in between attackers
+                for (int i = attackers.get(k); i < posOfKing; i += val) {
+                    for (int j = 0; j < active.size(); ++j) {
+                        ArrayList<Object[]> temp; // vector not string!
+                        if (validMove(active.get(j), i)) {
+                            temp = squares;
+                            update_board(active.get(j), i); 
+                        } else continue;
+
+                        if (!kInCheck(w ? posOfWK : posOfBK)) {
+                            inCM = false;
+                        }
+                        squares = temp;
+                        posOfBK = tempBK;
+                        posOfWK = tempWK;
+                        if (!inCM) break;
+                    }
+                    if (!inCM) break;
+                }
+            }
+            if (!inCM) break;
+        }
+
+        if (inCM) {
+            checkmate = true;
+            return true;
+        } else return inCM;
+    }
+
     public int notationToInteger(String s) {
         String square = s.toLowerCase(); 
 
@@ -611,5 +1087,36 @@ public class Board {
         Object[] temp = squares.get(square);
         String s = (String)temp[2];
         return s == bR || s == bN || s == bB || s == bQ || s == bK || s == bP;
+    }
+
+    public ArrayList<Integer> getAttackers() {
+        return posOfAttackers;
+    }
+    
+    public void resetAttackers() {
+        posOfAttackers.clear();
+    }
+    
+    public void isActive() {
+        activeWhite.clear();
+        activeBlack.clear();
+        for (int i = 0; i < 64; ++i) {
+            int selected = selectedSquare(i);
+            if (selected == 0) continue;
+            else if (selected > 0) activeWhite.add(i);
+            else activeBlack.add(i);
+        }
+    }
+
+    public boolean gameOver() {
+        return checkmate;
+    }
+    
+    public ArrayList<Object[]> snapshot() {
+        return squares;
+    }
+    
+    public void resetMove(ArrayList<Object[]> previous) {
+        squares = previous;
     }
 }
