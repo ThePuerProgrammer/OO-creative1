@@ -18,6 +18,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.Color;
 
@@ -29,6 +30,73 @@ public class GameBoard {
     static int turnCounter = 0;
     static boolean whitesTurn = true;
     static JTextArea moveList = new JTextArea();
+    static ArrayList<String> moves = new ArrayList<String>();
+    static JPanel a8 = new JPanel();
+    static JPanel b8 = new JPanel();
+    static JPanel c8 = new JPanel();
+    static JPanel d8 = new JPanel();
+    static JPanel e8 = new JPanel();
+    static JPanel f8 = new JPanel();
+    static JPanel g8 = new JPanel();
+    static JPanel h8 = new JPanel();
+    static JPanel a7 = new JPanel();
+    static JPanel b7 = new JPanel();
+    static JPanel c7 = new JPanel();
+    static JPanel d7 = new JPanel();
+    static JPanel e7 = new JPanel();
+    static JPanel f7 = new JPanel();
+    static JPanel g7 = new JPanel();
+    static JPanel h7 = new JPanel();
+    static JPanel a6 = new JPanel();
+    static JPanel b6 = new JPanel();
+    static JPanel c6 = new JPanel();
+    static JPanel d6 = new JPanel();
+    static JPanel e6 = new JPanel();
+    static JPanel f6 = new JPanel();
+    static JPanel g6 = new JPanel();
+    static JPanel h6 = new JPanel();
+    static JPanel a5 = new JPanel();
+    static JPanel b5 = new JPanel();
+    static JPanel c5 = new JPanel();
+    static JPanel d5 = new JPanel();
+    static JPanel e5 = new JPanel();
+    static JPanel f5 = new JPanel();
+    static JPanel g5 = new JPanel();
+    static JPanel h5 = new JPanel();
+    static JPanel a4 = new JPanel();
+    static JPanel b4 = new JPanel();
+    static JPanel c4 = new JPanel();
+    static JPanel d4 = new JPanel();
+    static JPanel e4 = new JPanel();
+    static JPanel f4 = new JPanel();
+    static JPanel g4 = new JPanel();
+    static JPanel h4 = new JPanel();
+    static JPanel a3 = new JPanel();
+    static JPanel b3 = new JPanel();
+    static JPanel c3 = new JPanel();
+    static JPanel d3 = new JPanel();
+    static JPanel e3 = new JPanel();
+    static JPanel f3 = new JPanel();
+    static JPanel g3 = new JPanel();
+    static JPanel h3 = new JPanel();
+    static JPanel a2 = new JPanel();
+    static JPanel b2 = new JPanel();
+    static JPanel c2 = new JPanel();
+    static JPanel d2 = new JPanel();
+    static JPanel e2 = new JPanel();
+    static JPanel f2 = new JPanel();
+    static JPanel g2 = new JPanel();
+    static JPanel h2 = new JPanel();
+    static JPanel a1 = new JPanel();
+    static JPanel b1 = new JPanel();
+    static JPanel c1 = new JPanel();
+    static JPanel d1 = new JPanel();
+    static JPanel e1 = new JPanel();
+    static JPanel f1 = new JPanel();
+    static JPanel g1 = new JPanel();
+    static JPanel h1 = new JPanel();
+
+
 
     public GameBoard(JFrame window, Clock clock) {
         turnCounter = 0;
@@ -185,7 +253,6 @@ public class GameBoard {
 
         // generate chessboard squares out of JPanels. Add pieces using JLabels and ImageIcons
         // LOTS of copy/paste. will refactor later if optimization exists! (It must)
-        JPanel a8 = new JPanel();
         a8.setBackground(lightSquares);
         JLabel aEight = new JLabel();
         aEight.setIcon(blackRook);
@@ -194,7 +261,6 @@ public class GameBoard {
         a8.putClientProperty(a8, "a8");
         a8.addMouseListener(new MouseClickListener(a8)); // all squares can detect clicks
 
-        JPanel b8 = new JPanel();
         b8.setBackground(darkSquares);
         JLabel bEight = new JLabel();
         bEight.setIcon(blackKnight);
@@ -203,7 +269,6 @@ public class GameBoard {
         b8.putClientProperty(b8, "b8");
         b8.addMouseListener(new MouseClickListener(b8));
 
-        JPanel c8 = new JPanel();
         c8.setBackground(lightSquares);
         JLabel cEight = new JLabel();
         cEight.setIcon(blackBishop);
@@ -212,7 +277,6 @@ public class GameBoard {
         c8.putClientProperty(c8, "c8");
         c8.addMouseListener(new MouseClickListener(c8));
 
-        JPanel d8 = new JPanel();
         d8.setBackground(darkSquares);
         JLabel dEight = new JLabel();
         dEight.setIcon(blackQueen);
@@ -221,7 +285,6 @@ public class GameBoard {
         d8.putClientProperty(d8, "d8");
         d8.addMouseListener(new MouseClickListener(d8));
 
-        JPanel e8 = new JPanel();
         e8.setBackground(lightSquares);
         JLabel eEight = new JLabel();
         eEight.setIcon(blackKing);
@@ -230,7 +293,6 @@ public class GameBoard {
         e8.putClientProperty(e8, "e8");
         e8.addMouseListener(new MouseClickListener(e8));
 
-        JPanel f8 = new JPanel();
         f8.setBackground(darkSquares);
         JLabel fEight = new JLabel();
         fEight.setIcon(blackBishop);
@@ -239,7 +301,6 @@ public class GameBoard {
         f8.putClientProperty(f8, "f8");
         f8.addMouseListener(new MouseClickListener(f8));
 
-        JPanel g8 = new JPanel();
         g8.setBackground(lightSquares);
         JLabel gEight = new JLabel();
         gEight.setIcon(blackKnight);
@@ -248,7 +309,6 @@ public class GameBoard {
         g8.putClientProperty(g8, "g8");
         g8.addMouseListener(new MouseClickListener(g8));
 
-        JPanel h8 = new JPanel();
         h8.setBackground(darkSquares);
         JLabel hEight = new JLabel();
         hEight.setIcon(blackRook);
@@ -257,7 +317,6 @@ public class GameBoard {
         h8.putClientProperty(h8, "h8");
         h8.addMouseListener(new MouseClickListener(h8));
 
-        JPanel a7 = new JPanel();
         a7.setBackground(darkSquares);
         JLabel aSeven = new JLabel();
         aSeven.setIcon(blackPawn);
@@ -266,7 +325,6 @@ public class GameBoard {
         a7.putClientProperty(a7, "a7");
         a7.addMouseListener(new MouseClickListener(a7));
 
-        JPanel b7 = new JPanel();
         b7.setBackground(lightSquares);
         JLabel bSeven = new JLabel();
         bSeven.setIcon(blackPawn);
@@ -275,7 +333,6 @@ public class GameBoard {
         b7.putClientProperty(b7, "b7");
         b7.addMouseListener(new MouseClickListener(b7));
 
-        JPanel c7 = new JPanel();
         c7.setBackground(darkSquares);
         JLabel cSeven = new JLabel();
         cSeven.setIcon(blackPawn);
@@ -284,7 +341,6 @@ public class GameBoard {
         c7.putClientProperty(c7, "c7");
         c7.addMouseListener(new MouseClickListener(c7));
 
-        JPanel d7 = new JPanel();
         d7.setBackground(lightSquares);
         JLabel dSeven = new JLabel();
         dSeven.setIcon(blackPawn);
@@ -293,7 +349,6 @@ public class GameBoard {
         d7.putClientProperty(d7, "d7");
         d7.addMouseListener(new MouseClickListener(d7));
 
-        JPanel e7 = new JPanel();
         e7.setBackground(darkSquares);
         JLabel eSeven = new JLabel();
         eSeven.setIcon(blackPawn);
@@ -302,7 +357,6 @@ public class GameBoard {
         e7.putClientProperty(e7, "e7");
         e7.addMouseListener(new MouseClickListener(e7));
 
-        JPanel f7 = new JPanel();
         f7.setBackground(lightSquares);
         JLabel fSeven = new JLabel();
         fSeven.setIcon(blackPawn);
@@ -311,7 +365,6 @@ public class GameBoard {
         f7.putClientProperty(f7, "f7");
         f7.addMouseListener(new MouseClickListener(f7));
 
-        JPanel g7 = new JPanel();
         g7.setBackground(darkSquares);
         JLabel gSeven = new JLabel();
         gSeven.setIcon(blackPawn);
@@ -320,7 +373,6 @@ public class GameBoard {
         g7.putClientProperty(g7, "g7");
         g7.addMouseListener(new MouseClickListener(g7));
 
-        JPanel h7 = new JPanel();
         h7.setBackground(lightSquares);
         JLabel hSeven = new JLabel();
         hSeven.setIcon(blackPawn);
@@ -329,7 +381,6 @@ public class GameBoard {
         h7.putClientProperty(h7, "h7");
         h7.addMouseListener(new MouseClickListener(h7));
 
-        JPanel a6 = new JPanel();
         a6.setBackground(lightSquares);
         JLabel aSix= new JLabel();
         a6.add(aSix);
@@ -337,7 +388,6 @@ public class GameBoard {
         board.add(a6);
         a6.putClientProperty(a6, "a6");
 
-        JPanel b6 = new JPanel();
         b6.setBackground(darkSquares);
         JLabel bSix= new JLabel();
         b6.add(bSix);
@@ -345,7 +395,6 @@ public class GameBoard {
         board.add(b6);
         b6.putClientProperty(b6, "b6");
 
-        JPanel c6 = new JPanel();
         c6.setBackground(lightSquares);
         JLabel cSix= new JLabel();
         c6.add(cSix);
@@ -353,7 +402,6 @@ public class GameBoard {
         board.add(c6);
         c6.putClientProperty(c6, "c6");
 
-        JPanel d6 = new JPanel();
         d6.setBackground(darkSquares);
         JLabel dSix= new JLabel();
         d6.add(dSix);
@@ -361,7 +409,6 @@ public class GameBoard {
         board.add(d6);
         d6.putClientProperty(d6, "d6");
 
-        JPanel e6 = new JPanel();
         e6.setBackground(lightSquares);
         JLabel eSix = new JLabel();
         e6.add(eSix);
@@ -369,7 +416,6 @@ public class GameBoard {
         board.add(e6);
         e6.putClientProperty(e6, "e6");
 
-        JPanel f6 = new JPanel();
         f6.setBackground(darkSquares);
         JLabel fSix = new JLabel();
         f6.add(fSix);
@@ -377,7 +423,6 @@ public class GameBoard {
         board.add(f6);
         f6.putClientProperty(f6, "f6");
 
-        JPanel g6 = new JPanel();
         g6.setBackground(lightSquares);
         JLabel gSix = new JLabel();
         g6.add(gSix);
@@ -385,7 +430,6 @@ public class GameBoard {
         board.add(g6);
         g6.putClientProperty(g6, "g6");
 
-        JPanel h6 = new JPanel();
         h6.setBackground(darkSquares);
         JLabel hSix = new JLabel();
         h6.add(hSix);
@@ -393,7 +437,6 @@ public class GameBoard {
         board.add(h6);
         h6.putClientProperty(h6, "h6");
 
-        JPanel a5 = new JPanel();
         a5.setBackground(darkSquares);
         JLabel aFive = new JLabel();
         a5.add(aFive);
@@ -401,7 +444,6 @@ public class GameBoard {
         board.add(a5);
         a5.putClientProperty(a5, "a5");
 
-        JPanel b5 = new JPanel();
         b5.setBackground(lightSquares);
         JLabel bFive = new JLabel();
         b5.add(bFive);
@@ -409,7 +451,6 @@ public class GameBoard {
         board.add(b5);
         b5.putClientProperty(b5, "b5");
 
-        JPanel c5 = new JPanel();
         c5.setBackground(darkSquares);
         JLabel cFive = new JLabel();
         c5.add(cFive);
@@ -417,7 +458,6 @@ public class GameBoard {
         board.add(c5);
         c5.putClientProperty(c5, "c5");
 
-        JPanel d5 = new JPanel();
         d5.setBackground(lightSquares);
         JLabel dFive = new JLabel();
         d5.add(dFive);
@@ -425,7 +465,6 @@ public class GameBoard {
         board.add(d5);
         d5.putClientProperty(d5, "d5");
 
-        JPanel e5 = new JPanel();
         e5.setBackground(darkSquares);
         JLabel eFive = new JLabel();
         e5.add(eFive);
@@ -433,7 +472,6 @@ public class GameBoard {
         board.add(e5);
         e5.putClientProperty(e5, "e5");
 
-        JPanel f5 = new JPanel();
         f5.setBackground(lightSquares);
         JLabel fFive = new JLabel();
         f5.add(fFive);
@@ -441,7 +479,6 @@ public class GameBoard {
         board.add(f5);
         f5.putClientProperty(f5, "f5");
 
-        JPanel g5 = new JPanel();
         g5.setBackground(darkSquares);
         JLabel gFive = new JLabel();
         g5.add(gFive);
@@ -449,7 +486,6 @@ public class GameBoard {
         board.add(g5);
         g5.putClientProperty(g5, "g5");
         
-        JPanel h5 = new JPanel();
         h5.setBackground(lightSquares);
         JLabel hFive = new JLabel();
         h5.add(hFive);
@@ -457,7 +493,6 @@ public class GameBoard {
         board.add(h5);
         h5.putClientProperty(h5, "h5");
 
-        JPanel a4 = new JPanel();
         a4.setBackground(lightSquares);
         JLabel aFour = new JLabel();
         a4.add(aFour);
@@ -465,7 +500,6 @@ public class GameBoard {
         board.add(a4);
         a4.putClientProperty(a4, "a4");
 
-        JPanel b4 = new JPanel();
         b4.setBackground(darkSquares);
         JLabel bFour = new JLabel();
         b4.add(bFour);
@@ -473,7 +507,6 @@ public class GameBoard {
         board.add(b4);
         b4.putClientProperty(b4, "b4");
 
-        JPanel c4 = new JPanel();
         c4.setBackground(lightSquares);
         JLabel cFour = new JLabel();
         c4.add(cFour);
@@ -481,7 +514,6 @@ public class GameBoard {
         board.add(c4);
         c4.putClientProperty(c4, "c4");
 
-        JPanel d4 = new JPanel();
         d4.setBackground(darkSquares);
         JLabel dFour = new JLabel();
         d4.add(dFour);
@@ -489,7 +521,6 @@ public class GameBoard {
         board.add(d4);
         d4.putClientProperty(d4, "d4");
 
-        JPanel e4 = new JPanel();
         e4.setBackground(lightSquares);
         JLabel eFour = new JLabel();
         e4.add(eFour);
@@ -497,7 +528,6 @@ public class GameBoard {
         board.add(e4);
         e4.putClientProperty(e4, "e4");
 
-        JPanel f4 = new JPanel();
         f4.setBackground(darkSquares);
         JLabel fFour = new JLabel();
         f4.add(fFour);
@@ -505,7 +535,6 @@ public class GameBoard {
         board.add(f4);
         f4.putClientProperty(f4, "f4");
 
-        JPanel g4 = new JPanel();
         g4.setBackground(lightSquares);
         JLabel gFour = new JLabel();
         g4.add(gFour);
@@ -513,7 +542,6 @@ public class GameBoard {
         board.add(g4);
         g4.putClientProperty(g4, "g4");
 
-        JPanel h4 = new JPanel();
         h4.setBackground(darkSquares);
         JLabel hFour = new JLabel();
         h4.add(hFour);
@@ -521,7 +549,6 @@ public class GameBoard {
         board.add(h4);
         h4.putClientProperty(h4, "h4");
 
-        JPanel a3 = new JPanel();
         a3.setBackground(darkSquares);
         JLabel aThree = new JLabel();
         a3.add(aThree);
@@ -529,7 +556,6 @@ public class GameBoard {
         board.add(a3);
         a3.putClientProperty(a3, "a3");
 
-        JPanel b3 = new JPanel();
         b3.setBackground(lightSquares);
         JLabel bThree = new JLabel();
         b3.add(bThree);
@@ -537,7 +563,6 @@ public class GameBoard {
         board.add(b3);
         b3.putClientProperty(b3, "b3");
 
-        JPanel c3 = new JPanel();
         c3.setBackground(darkSquares);
         JLabel cThree = new JLabel();
         c3.add(cThree);
@@ -545,7 +570,6 @@ public class GameBoard {
         board.add(c3);
         c3.putClientProperty(c3, "c3");
 
-        JPanel d3 = new JPanel();
         d3.setBackground(lightSquares);
         JLabel dThree = new JLabel();
         d3.add(dThree);
@@ -553,7 +577,6 @@ public class GameBoard {
         board.add(d3);
         d3.putClientProperty(d3, "d3");
 
-        JPanel e3 = new JPanel();
         e3.setBackground(darkSquares);
         JLabel eThree = new JLabel();
         e3.add(eThree);
@@ -561,7 +584,6 @@ public class GameBoard {
         board.add(e3);
         e3.putClientProperty(e3, "e3");
 
-        JPanel f3 = new JPanel();
         f3.setBackground(lightSquares);
         JLabel fThree = new JLabel();
         f3.add(fThree);
@@ -569,7 +591,6 @@ public class GameBoard {
         board.add(f3);
         f3.putClientProperty(f3, "f3");
 
-        JPanel g3 = new JPanel();
         g3.setBackground(darkSquares);
         JLabel gThree = new JLabel();
         g3.add(gThree);
@@ -577,7 +598,6 @@ public class GameBoard {
         board.add(g3);
         g3.putClientProperty(g3, "g3");
 
-        JPanel h3 = new JPanel();
         h3.setBackground(lightSquares);
         JLabel hThree = new JLabel();
         h3.add(hThree);
@@ -585,7 +605,6 @@ public class GameBoard {
         board.add(h3);
         h3.putClientProperty(h3, "h3");
 
-        JPanel a2 = new JPanel();
         a2.setBackground(lightSquares);
         JLabel aTwo = new JLabel();
         aTwo.setIcon(whitePawn);
@@ -595,7 +614,6 @@ public class GameBoard {
         a2.putClientProperty(a2, "a2");
 
 
-        JPanel b2 = new JPanel();
         b2.setBackground(darkSquares);
         JLabel bTwo = new JLabel();
         bTwo.setIcon(whitePawn);
@@ -604,7 +622,6 @@ public class GameBoard {
         b2.addMouseListener(new MouseClickListener(b2));
         b2.putClientProperty(b2, "b2");
 
-        JPanel c2 = new JPanel();
         c2.setBackground(lightSquares);
         JLabel cTwo = new JLabel();
         cTwo.setIcon(whitePawn);
@@ -613,7 +630,6 @@ public class GameBoard {
         c2.addMouseListener(new MouseClickListener(c2));
         c2.putClientProperty(c2, "c2");
 
-        JPanel d2 = new JPanel();
         d2.setBackground(darkSquares);
         JLabel dTwo = new JLabel();
         dTwo.setIcon(whitePawn);
@@ -622,7 +638,6 @@ public class GameBoard {
         d2.addMouseListener(new MouseClickListener(d2));
         d2.putClientProperty(d2, "d2");
 
-        JPanel e2 = new JPanel();
         e2.setBackground(lightSquares);
         JLabel eTwo = new JLabel();
         eTwo.setIcon(whitePawn);
@@ -631,7 +646,6 @@ public class GameBoard {
         e2.addMouseListener(new MouseClickListener(e2));
         e2.putClientProperty(e2, "e2");
 
-        JPanel f2 = new JPanel();
         f2.setBackground(darkSquares);
         JLabel fTwo = new JLabel();
         fTwo.setIcon(whitePawn);
@@ -640,7 +654,6 @@ public class GameBoard {
         f2.addMouseListener(new MouseClickListener(f2));
         f2.putClientProperty(f2, "f2");
 
-        JPanel g2 = new JPanel();
         g2.setBackground(lightSquares);
         JLabel gTwo = new JLabel();
         gTwo.setIcon(whitePawn);
@@ -649,7 +662,6 @@ public class GameBoard {
         g2.addMouseListener(new MouseClickListener(g2));
         g2.putClientProperty(g2, "g2");
 
-        JPanel h2 = new JPanel();
         h2.setBackground(darkSquares);
         JLabel hTwo = new JLabel();
         hTwo.setIcon(whitePawn);
@@ -658,7 +670,6 @@ public class GameBoard {
         h2.addMouseListener(new MouseClickListener(h2));
         h2.putClientProperty(h2, "h2");
 
-        JPanel a1 = new JPanel();
         a1.setBackground(darkSquares);
         JLabel aOne = new JLabel();
         aOne.setIcon(whiteRook);
@@ -667,7 +678,6 @@ public class GameBoard {
         a1.addMouseListener(new MouseClickListener(a1));
         a1.putClientProperty(a1, "a1");
 
-        JPanel b1 = new JPanel();
         b1.setBackground(lightSquares);
         JLabel bOne = new JLabel();
         bOne.setIcon(whiteKnight);
@@ -676,7 +686,6 @@ public class GameBoard {
         board.add(b1);
         b1.putClientProperty(b1, "b1");
 
-        JPanel c1 = new JPanel();
         c1.setBackground(darkSquares);
         JLabel cOne = new JLabel();
         cOne.setIcon(whiteBishop);
@@ -685,7 +694,6 @@ public class GameBoard {
         board.add(c1);
         c1.putClientProperty(c1, "c1");
 
-        JPanel d1 = new JPanel();
         d1.setBackground(lightSquares);
         JLabel dOne = new JLabel();
         dOne.setIcon(whiteQueen);
@@ -694,7 +702,6 @@ public class GameBoard {
         board.add(d1);
         d1.putClientProperty(d1, "d1");
 
-        JPanel e1 = new JPanel();
         e1.setBackground(darkSquares);
         JLabel eOne = new JLabel();
         eOne.setIcon(whiteKing);
@@ -703,7 +710,6 @@ public class GameBoard {
         board.add(e1);
         e1.putClientProperty(e1, "e1");
 
-        JPanel f1 = new JPanel();
         f1.setBackground(lightSquares);
         JLabel fOne = new JLabel();
         fOne.setIcon(whiteBishop);
@@ -712,7 +718,6 @@ public class GameBoard {
         board.add(f1);
         f1.putClientProperty(f1, "f1");
 
-        JPanel g1 = new JPanel();
         g1.setBackground(darkSquares);
         JLabel gOne = new JLabel();
         gOne.setIcon(whiteKnight);
@@ -721,7 +726,6 @@ public class GameBoard {
         board.add(g1);
         g1.putClientProperty(g1, "g1");
 
-        JPanel h1 = new JPanel();
         h1.setBackground(lightSquares);
         JLabel hOne = new JLabel();
         hOne.setIcon(whiteRook);
@@ -800,5 +804,149 @@ public class GameBoard {
 
     static public String read() {
         return moveList.getText();
+    }
+
+    static public void addMoves(ArrayList<String> aLS) {
+        moves = aLS;
+    }
+
+    static public void updateBoard() {
+        ImageIcon iTemp;
+        JLabel lTemp;
+        if (moves.get(0) == "a8") {
+            lTemp = (JLabel)a8.getComponent(0);
+            if (lTemp.getIcon() != null) {
+                iTemp = (ImageIcon)lTemp.getIcon();
+                lTemp.setIcon(null);
+            }
+        } else if (moves.get(0) == "b8") {
+            moves.add("b8");
+        } else if (moves.get(0) == "c8") {
+            moves.add("c8");
+        } else if (moves.get(0) == "d8") {
+            moves.add("d8");
+        } else if (moves.get(0) == "e8") {
+            moves.add("e8");
+        } else if (moves.get(0) == "f8") {
+            moves.add("f8");
+        } else if (moves.get(0) == "g8") {
+            moves.add("g8");
+        } else if (moves.get(0) == "h8") {
+            moves.add("h8");
+        } else if (moves.get(0) == "a7") {
+            moves.add("a7");
+        } else if (moves.get(0) == "b7") {
+            moves.add("b7");
+        } else if (moves.get(0) == "c7") {
+            moves.add("c7");
+        } else if (moves.get(0) == "d7") {
+            moves.add("d7");
+        } else if (moves.get(0) == "e7") {
+            moves.add("e7");
+        } else if (moves.get(0) == "f7") {
+            moves.add("f7");
+        } else if (moves.get(0) == "g7") {
+            moves.add("g7");
+        } else if (moves.get(0) == "h7") {
+            moves.add("h7");
+        } else if (moves.get(0) == "a6") {
+            moves.add("a6");
+        } else if (moves.get(0) == "b6") {
+            moves.add("b6");
+        } else if (moves.get(0) == "c6") {
+            moves.add("c6");
+        } else if (moves.get(0) == "d6") {
+            moves.add("d6");
+        } else if (moves.get(0) == "e6") {
+            moves.add("e6");
+        } else if (moves.get(0) == "f6") {
+            moves.add("f6");
+        } else if (moves.get(0) == "g6") {
+            moves.add("g6");
+        } else if (moves.get(0) == "h6") {
+            moves.add("h6");
+        } else if (moves.get(0) == "a5") {
+            moves.add("a5");
+        } else if (moves.get(0) == "b5") {
+            moves.add("b5");
+        } else if (moves.get(0) == "c5") {
+            moves.add("c5");
+        } else if (moves.get(0) == "d5") {
+            moves.add("d5");
+        } else if (moves.get(0) == "e5") {
+            moves.add("e5");
+        } else if (moves.get(0) == "f5") {
+            moves.add("f5");
+        } else if (moves.get(0) == "g5") {
+            moves.add("g5");
+        } else if (moves.get(0) == "h5") {
+            moves.add("h5");
+        } else if (moves.get(0) == "a4") {
+            moves.add("a4");
+        } else if (moves.get(0) == "b4") {
+            moves.add("b4");
+        } else if (moves.get(0) == "c4") {
+            moves.add("c4");
+        } else if (moves.get(0) == "d4") {
+            moves.add("d4");
+        } else if (moves.get(0) == "e4") {
+            moves.add("e4");
+        } else if (moves.get(0) == "f4") {
+            moves.add("f4");
+        } else if (moves.get(0) == "g4") {
+            moves.add("g4");
+        } else if (moves.get(0) == "h4") {
+            moves.add("h4");
+        } else if (moves.get(0) == "a3") {
+            moves.add("a3");
+        } else if (moves.get(0) == "b3") {
+            moves.add("b3");
+        } else if (moves.get(0) == "c3") {
+            moves.add("c3");
+        } else if (moves.get(0) == "d3") {
+            moves.add("d3");
+        } else if (moves.get(0) == "e3") {
+            moves.add("e3");
+        } else if (moves.get(0) == "f3") {
+            moves.add("f3");
+        } else if (moves.get(0) == "g3") {
+            moves.add("g3");
+        } else if (moves.get(0) == "h3") {
+            moves.add("h3");
+        } else if (moves.get(0) == "a2") {
+            moves.add("a2");
+        } else if (moves.get(0) == "b2") {
+            moves.add("b2");
+        } else if (moves.get(0) == "c2") {
+            moves.add("c2");
+        } else if (moves.get(0) == "d2") {
+            moves.add("d2");
+        } else if (moves.get(0) == "e2") {
+            moves.add("e2");
+        } else if (moves.get(0) == "f2") {
+            moves.add("f2");
+        } else if (moves.get(0) == "g2") {
+            moves.add("g2");
+        } else if (moves.get(0) == "h2") {
+            moves.add("h2");
+        } else if (moves.get(0) == "a1") {
+            moves.add("a1");
+        } else if (moves.get(0) == "b1") {
+            moves.add("b1");
+        } else if (moves.get(0) == "c1") {
+            moves.add("c1");
+        } else if (moves.get(0) == "d1") {
+            moves.add("d1");
+        } else if (moves.get(0) == "e1") {
+            moves.add("e1");
+        } else if (moves.get(0) == "f1") {
+            moves.add("f1");
+        } else if (moves.get(0) == "g1") {
+            moves.add("g1");
+        } else if (moves.get(0) == "h1") {
+            moves.add("h1");
+        }
+
+        moves.clear();
     }
 }

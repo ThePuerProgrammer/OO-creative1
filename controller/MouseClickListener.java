@@ -213,26 +213,30 @@ public class MouseClickListener implements MouseInputListener {
                     Board.whiteCap((String)snap.get(nx)[2]);
                     GameBoard.setWhitesTurn(true);
                 }
+                GameBoard.write(GameBoard.read() + "\n" + moves.get(0) + " -> " + moves.get(1));
+                GameBoard.addMoves(moves);
+                // GameBoard.updateBoard();
                 posOfKing = Board.positionOfKing(GameBoard.getWhitesTurn());
                 if (GameBoard.getWhitesTurn()) { // white's turn
-                    GameBoard.write(GameBoard.read() + "\nWhite's Turn");
                     if (Board.kInCheck(posOfKing)) {
                         if (Board.inCheckmate(posOfKing, Board.getAttackers())) {
                             GameBoard.write(GameBoard.read() + "\nCheckmate! Black Wins!");
+                            return;
                         } else { 
                             GameBoard.write(GameBoard.read() + "\nWhite King in check!");
                         }
                     }
+                    GameBoard.write(GameBoard.read() + "\nWhite's Turn");
                 } else { // blacks turn
-                    GameBoard.write(GameBoard.read() + "\nBlack's Turn");
                     if (Board.kInCheck(posOfKing)) {
                         if (Board.inCheckmate(posOfKing, Board.getAttackers())) {
                             GameBoard.write(GameBoard.read() + "\nCheckmate! White Wins!");
+                            return;
                         } else {
                             GameBoard.write(GameBoard.read() + "\nBlack King in check!");
                         }
                     }
-
+                    GameBoard.write(GameBoard.read() + "\nBlack's Turn");
                 }
                 moves.clear();
             }
