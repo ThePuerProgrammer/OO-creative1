@@ -18,6 +18,7 @@ import java.awt.Color;
 public class OptionsMenu {
     static double saveTime = 0.0;
     double tempTime = saveTime;
+    String tempTheme = "";
     Clock clock;
 
     JFrame window = new JFrame();
@@ -34,11 +35,11 @@ public class OptionsMenu {
 
 
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(500, 300));
+        panel.setPreferredSize(new Dimension(300, 300));
         panel.setLayout(new GridLayout(3,3));
 
         JPanel group = new JPanel();
-        group.setPreferredSize(new Dimension(500, 400));
+        group.setPreferredSize(new Dimension(300, 400));
 
         JLabel header = new JLabel("Select Time Limit", SwingConstants.CENTER);
         header.setFont(new Font("Heveltica", Font.PLAIN, 24));
@@ -46,11 +47,11 @@ public class OptionsMenu {
         group.add(BorderLayout.CENTER, panel);
 
         JPanel south = new JPanel();
-        south.setPreferredSize(new Dimension(500, 30));
+        south.setPreferredSize(new Dimension(200, 30));
         south.setLayout(new GridLayout(1,2));
 
         JPanel east = new JPanel();
-        east.setPreferredSize(new Dimension(100, 300));
+        east.setPreferredSize(new Dimension(300, 300));
         east.setLayout(new GridLayout(2, 1));
 
         JLabel theme = new JLabel("Theme", SwingConstants.CENTER);
@@ -58,24 +59,32 @@ public class OptionsMenu {
         theme.setPreferredSize(new Dimension(100,30));
 
         JPanel group2 = new JPanel();
-        group2.setPreferredSize(new Dimension(100, 400));
+        group2.setPreferredSize(new Dimension(300, 400));
 
         group2.add(BorderLayout.NORTH, theme);
         group2.add(BorderLayout.CENTER, east);
 
         JButton marble = new JButton("Marble");
         JButton tournament = new JButton("Tournament");
+        JButton dark = new JButton("Dark");
 
         if (GameBoard.getTheme() == "marble") {
             marble.setForeground(Color.RED);
             tournament.setForeground(Color.BLACK);
-        } else {
+            dark.setForeground(Color.BLACK);
+        } else if (GameBoard.getTheme() == "tournament") {
             marble.setForeground(Color.BLACK);
             tournament.setForeground(Color.RED);
+            dark.setForeground(Color.BLACK);
+        } else {
+            marble.setForeground(Color.BLACK);
+            tournament.setForeground(Color.BLACK);
+            dark.setForeground(Color.RED);
         }
 
         east.add(marble);
         east.add(tournament);
+        east.add(dark);
 
         JButton cancel = new JButton("Cancel");
         JButton save = new JButton("Save");
@@ -243,15 +252,23 @@ public class OptionsMenu {
         marble.addActionListener( e -> {
             marble.setForeground(Color.RED);
             tournament.setForeground(Color.BLACK);
-            GameBoard.setTheme("marble");
+            dark.setForeground(Color.BLACK);
+            tempTheme = "marble";
         });
 
         tournament.addActionListener( e -> {
             marble.setForeground(Color.BLACK);
+            dark.setForeground(Color.BLACK);
             tournament.setForeground(Color.RED);
-            GameBoard.setTheme("tournament");
+            tempTheme = "tournament";
         });
 
+        dark.addActionListener( e -> {
+            marble.setForeground(Color.BLACK);
+            tournament.setForeground(Color.BLACK);
+            dark.setForeground(Color.RED);
+            tempTheme = "dark";
+        });
 
         cancel.addActionListener( e -> {
             window.getContentPane().removeAll();
@@ -269,6 +286,7 @@ public class OptionsMenu {
             window.pack();
             window.setLocationRelativeTo(null); 
             window.revalidate();
+            GameBoard.setTheme(tempTheme);
             saveTime = tempTime;
             clock.updateClock(saveTime);
         });

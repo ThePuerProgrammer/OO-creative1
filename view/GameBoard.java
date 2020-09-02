@@ -25,7 +25,7 @@ import java.awt.Image;
 
 public class GameBoard {
 
-    static private String colorTheme = "tournament";
+    static private String colorTheme = "dark";
     JFrame window = new JFrame();
     Clock clock;
     static int turnCounter = 0;
@@ -232,11 +232,12 @@ public class GameBoard {
 
 
     // play window theme colors
-    static Color grey = new Color(80,80,70);
-    static Color theme = new Color(202, 164, 114);
+    static Color grey;
+    static Color theme;
+    static Color text;
     // colors for the squares
-    static Color darkSquares = new Color(40, 90, 0);
-    static Color lightSquares = new Color(240, 227, 200);
+    static Color darkSquares;
+    static Color lightSquares;
 
 
     // all of my chess pieces!
@@ -253,6 +254,13 @@ public class GameBoard {
     static ImageIcon whiteQueen = new ImageIcon("assets/WhiteQueen.png");
     static ImageIcon whiteKing = new ImageIcon("assets/WhiteKing.png", "WhiteKing");
     static ImageIcon user = new ImageIcon("assets/user.png");
+
+    static JPanel stupidFix = new JPanel();
+    static JPanel stupidFix2 = new JPanel(); 
+    static JLabel cap = new JLabel("Captured Black Pieces"); //Captured Black Pieces
+    static JLabel cap2 = new JLabel("Captured White Pieces"); // Captured White Pieces
+    static JPanel captures = new JPanel();
+    static JPanel captures2 = new JPanel();
 
     public GameBoard(JFrame window, Clock clock) {
         turnCounter = 0;
@@ -301,17 +309,25 @@ public class GameBoard {
         Board chess = new Board(); // ignore warning, only constructor required
 
         if (colorTheme == "marble") {
-            grey = new Color(56,110,134);
-            theme = new Color(157, 197, 214);
-            darkSquares = new Color(151,143,139);
-            lightSquares = new Color(228,226,225);
+            grey = new Color(56,110,134); // gray
+            theme = new Color(157, 197, 214); // baby blue
+            text = new Color(0, 0, 0); // Bright green
+            darkSquares = new Color(151,143,139); // light gray
+            lightSquares = new Color(228,226,225); // dark gray
         } else if (colorTheme == "tournament") {
                 // play window theme colors
-            grey = new Color(80,80,70);
-            theme = new Color(202, 164, 114);
+            grey = new Color(80,80,70); // green gray
+            theme = new Color(202, 164, 114); // brown
+            text = new Color(100, 100, 100); // Bright green
             // colors for the squares
-            darkSquares = new Color(40, 90, 0);
-            lightSquares = new Color(240, 227, 200);
+            darkSquares = new Color(40, 90, 0); // tourney green
+            lightSquares = new Color(240, 227, 200); // creme
+        } else if (colorTheme == "dark") {
+            grey = new Color(0,0,0); // black
+            theme = new Color(40, 40, 40); // dark gray
+            text = new Color(0, 160, 60); // Bright green
+            darkSquares = new Color(60,60,60); // dark gray
+            lightSquares = new Color(100,100,100); // white
         }
 
         // primary container
@@ -342,7 +358,7 @@ public class GameBoard {
 
         // label for the move list
         JLabel moveMenu = new JLabel("Move History",SwingConstants.CENTER);
-        moveMenu.setForeground(Color.BLACK);
+        moveMenu.setForeground(text);
         moveMenu.setFont(new Font("Heveltica", Font.BOLD, 30));
         moveMenu.setPreferredSize(new Dimension(400, 88));
 
@@ -408,24 +424,34 @@ public class GameBoard {
 
         // Labels
         JLabel user1 = new JLabel("Player 1");
+        user1.setForeground(text);
         JLabel user2 = new JLabel("Player 2");
-        JLabel cap = new JLabel(""); //Captured Black Pieces
-        JLabel cap2 = new JLabel(""); // Captured White Pieces
-        JPanel captures = new JPanel();
+        user2.setForeground(text);
+        cap.setForeground(text);
+        cap2.setForeground(text);
         captures.add(cap);
-        captures.setBackground(theme);
-        JPanel captures2 = new JPanel();
+        captures.setBackground(lightSquares);
         captures2.add(cap2);
-        captures2.setBackground(theme);
+        captures2.setBackground(lightSquares);
 
+        Dimension stupid = new Dimension(470,50);
+        stupidFix.setPreferredSize(stupid);
+        stupidFix.setBackground(lightSquares);
+        stupidFix2.setPreferredSize(stupid);
+        stupidFix2.setBackground(lightSquares);
 
         // panels
         whiteCap.setPreferredSize(space);
-        whiteCap.setBackground(theme);
-        whiteCap.add(BorderLayout.WEST, captures);
+        whiteCap.setBackground(lightSquares);
+        whiteCap.setBorder(BorderFactory.createLoweredBevelBorder());
+        whiteCap.add(BorderLayout.NORTH, captures);
+        whiteCap.add(BorderLayout.CENTER, stupidFix);
         blackCap.setPreferredSize(space);
-        blackCap.setBackground(theme);
-        blackCap.add(BorderLayout.WEST, captures2);
+        blackCap.setBackground(lightSquares);
+        blackCap.setBorder(BorderFactory.createLoweredBevelBorder());
+        blackCap.add(BorderLayout.NORTH, captures2);
+        blackCap.add(BorderLayout.CENTER, stupidFix2);
+
 
 
         JPanel u1 = new JPanel();
@@ -880,8 +906,8 @@ public class GameBoard {
             window.pack();
             window.setLocationRelativeTo(null); 
             window.revalidate();
-            blackCap.removeAll();
-            whiteCap.removeAll();
+            stupidFix.removeAll();
+            stupidFix2.removeAll();
         });
 
         options.addActionListener( e -> {
@@ -896,8 +922,8 @@ public class GameBoard {
             window.pack();
             window.setLocationRelativeTo(null); 
             window.revalidate();
-            blackCap.removeAll();
-            whiteCap.removeAll();
+            stupidFix.removeAll();
+            stupidFix2.removeAll();
         });
 
         newGame.addActionListener( e -> {
@@ -908,8 +934,8 @@ public class GameBoard {
             window.pack();
             window.setLocationRelativeTo(null); 
             window.revalidate();
-            blackCap.removeAll();
-            whiteCap.removeAll();
+            stupidFix.removeAll();
+            stupidFix2.removeAll();
         });
     }
 
@@ -1303,7 +1329,7 @@ public class GameBoard {
 
 
         JPanel temp = new JPanel();
-        temp.setBackground(theme);
+        temp.setBackground(lightSquares);
         JLabel temp2= new JLabel();
         temp.add(temp2);
 
@@ -1570,11 +1596,11 @@ public class GameBoard {
 
     static private void capIt(JLabel square, JLabel temp2, JPanel temp) {
         if (square.getIcon() != null) {
-            temp2.setIcon(new ImageIcon(((ImageIcon)square.getIcon()).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+            temp2.setIcon(new ImageIcon(((ImageIcon)square.getIcon()).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
             if (whitesTurn) {
-                blackCap.add(BorderLayout.EAST, temp);
+                stupidFix2.add(temp);
             } else {
-                whiteCap.add(BorderLayout.EAST, temp);
+                stupidFix.add(temp);
             }
         }
     }
