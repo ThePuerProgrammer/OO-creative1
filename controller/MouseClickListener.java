@@ -34,7 +34,6 @@ public class MouseClickListener implements MouseInputListener {
     @Override
     public void mousePressed(MouseEvent e) {
         prev = panel.getBackground();
-        JLabel temp = (JLabel)panel.getComponent(0);
         if (moves.size() < 2) {
             panel.setBackground(new Color(255, 195, 45, 200));
         }
@@ -197,25 +196,29 @@ public class MouseClickListener implements MouseInputListener {
                     moves.clear();
                     return;
                 }
-                ArrayList<Object[]> snap = Board.snapshot();
+                ArrayList<Object[]> snap = new ArrayList<>(Board.snapshot());
                 Board.updateBoard(cur, nx);
                 int posOfKing = Board.positionOfKing(GameBoard.getWhitesTurn());
                 if (GameBoard.getWhitesTurn()) {
                     if (Board.kInCheck(posOfKing)) {
                         Board.resetMove(snap);
                         GameBoard.write(GameBoard.read() + "\nInvalid Move! King in check!");
+                        moves.clear();
                         return;
+                    } else {
+                        Board.blackCap((String)snap.get(nx)[2]);
+                        GameBoard.setWhitesTurn(false);
                     }
-                    Board.blackCap((String)snap.get(nx)[2]);
-                    GameBoard.setWhitesTurn(false);
                 } else {
                     if (Board.kInCheck(posOfKing)) {
                         Board.resetMove(snap);
                         GameBoard.write(GameBoard.read() + "\nInvalid Move! King in check!");
+                        moves.clear();
                         return;
+                    } else {
+                        Board.whiteCap((String)snap.get(nx)[2]);
+                        GameBoard.setWhitesTurn(true);
                     }
-                    Board.whiteCap((String)snap.get(nx)[2]);
-                    GameBoard.setWhitesTurn(true);
                 }
                 GameBoard.write(GameBoard.read() + "\n" + moves.get(0) + " -> " + moves.get(1));
                 GameBoard.addMoves(moves);

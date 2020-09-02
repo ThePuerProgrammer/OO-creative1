@@ -47,6 +47,28 @@ public class Board {
     static String bP = "♟";
 
     public Board() {
+        whiteCaptured = new ArrayList<String>();
+        blackCaptured = new ArrayList<String>();
+        squares = new ArrayList<Object[]>();    
+        posOfAttackers = new ArrayList<Integer>();
+        activeWhite = new ArrayList<Integer>();
+        activeBlack = new ArrayList<Integer>();
+
+        kingInCheck = false;
+        checkmate = false;
+        wRrookMoved = false;
+        wLrookMoved = false;
+        wkingMoved = false;
+        bRrookMoved = false;
+        bLrookMoved = false;
+        bkingMoved = false;
+        wKingside = false;
+        bKingside = false;
+        wQueenside = false;
+        bQueenside = false;
+
+        posOfWK = 4;
+        posOfBK = 60;
     
         int[] rank = new int[9];
         for (int i = 0; i < 9; i++)
@@ -135,9 +157,9 @@ public class Board {
         // empty piece from current square
         currentSquare[2] = " ";
 
-        // replace updated Object[file, rank, piece] into ArrayList squares
-        squares.set(next, nextSquare);
-        squares.set(current, currentSquare);
+        // // replace updated Object[file, rank, piece] into ArrayList squares
+        // squares.set(next, nextSquare);
+        // squares.set(current, currentSquare);
     }
 
     static public int positionOfKing(Boolean isWhite) {
@@ -922,6 +944,8 @@ public class Board {
         // reset all active pieces on board
         isActive(); // all pieces currently on board
 
+        ArrayList<Object[]> snap = snapshot();
+
         boolean w; // white
 
         boolean inCM = true; // assumes yes first
@@ -978,16 +1002,26 @@ public class Board {
                 // checking every square in between attackers
                 for (int i = attackers.get(k); i < posOfKing; i += val) {
                     for (int j = 0; j < active.size(); ++j) {
-                        ArrayList<Object[]> temp; // vector not string!
+                        ArrayList<Object[]> temp = new ArrayList<>(); // vector not string!
                         if (validMove(active.get(j), i)) {
-                            temp = squares;
+                            for (int n = 0; n < squares.size(); n++) {
+                                Object[] o = new Object[3];
+                                char c = ((char)squares.get(n)[0]);
+                                int f = ((int)squares.get(n)[1]);
+                                String str = ((String)squares.get(n)[2]);
+                                o[0] = c;
+                                o[1] = f;
+                                o[2] = str;
+                                temp.add(o);
+                            }
                             updateBoard(active.get(j), i); 
                         } else continue;
 
                         if (!kInCheck(w ? posOfWK : posOfBK)) {
                             inCM = false;
                         }
-                        squares = temp;
+                        squares.clear();
+                        squares.addAll(temp);
                         posOfBK = tempBK;
                         posOfWK = tempWK;
                         if (!inCM) break;
@@ -997,6 +1031,8 @@ public class Board {
             }
             if (!inCM) break;
         }
+
+        resetMove(snap);
 
         if (inCM) {
             checkmate = true;
