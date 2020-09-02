@@ -4,7 +4,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
@@ -19,7 +18,7 @@ public class MouseClickListener implements MouseInputListener {
     static ImageIcon temp;
     String square = "";
 
-    Color prev = new Color(0,0,0,0);
+    static Color prev = new Color(0,0,0,0);
 
     JPanel panel = new JPanel();
 
@@ -261,8 +260,6 @@ public class MouseClickListener implements MouseInputListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override

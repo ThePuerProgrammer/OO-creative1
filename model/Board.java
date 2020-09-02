@@ -375,7 +375,7 @@ public class Board {
                 for (int i = cur - 9; i > next; i -= 9)
                     if (selectedSquare(i) != 0) return false;
             }
-        } else if (dif % 7 == 0) { // diagonally negative slope
+        } else if (dif % 7 == 0 && dif < 56) { // diagonally negative slope
             // top left
             if (next > cur) {
                 for (int i = cur + 7; i < next; i += 7)

@@ -264,7 +264,7 @@ public class GameBoard {
 
     public void init() {
         whitesTurn = true;
-        
+
         aSix.setIcon(null);
         bSix.setIcon(null);
         cSix.setIcon(null);
@@ -880,6 +880,8 @@ public class GameBoard {
             window.pack();
             window.setLocationRelativeTo(null); 
             window.revalidate();
+            blackCap.removeAll();
+            whiteCap.removeAll();
         });
 
         options.addActionListener( e -> {
@@ -894,6 +896,8 @@ public class GameBoard {
             window.pack();
             window.setLocationRelativeTo(null); 
             window.revalidate();
+            blackCap.removeAll();
+            whiteCap.removeAll();
         });
 
         newGame.addActionListener( e -> {
