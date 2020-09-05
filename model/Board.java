@@ -750,10 +750,12 @@ public class Board {
             if (sTemp == eQ || sTemp == eR) {
                 check = true;
                 posOfAttackers.add(temp);
+                break;
             }
             if (searchLength == 1 && sTemp == eK) {
                 check = true;
                 posOfAttackers.add(temp);
+                break;
             }
             ++temp;
         }
@@ -774,11 +776,13 @@ public class Board {
             if (sTemp == eQ || sTemp == eB) {
                 posOfAttackers.add(temp);
                 check = true;
+                break;
             }
             if (searchLength == 1 && 
             (sTemp == eK || sTemp == eP)) {
                 posOfAttackers.add(temp);
                 check = true; 
+                break;
             }
             temp += 9;
         }
@@ -799,10 +803,12 @@ public class Board {
             if (sTemp == eQ || sTemp == eR) {
                 posOfAttackers.add(temp);
                 check = true;
+                break;
             }
             if (searchLength == 1 && sTemp == eK) {
                 posOfAttackers.add(temp);
                 check = true; 
+                break;
             }
             temp += 8;
         }
@@ -823,11 +829,13 @@ public class Board {
             if (sTemp == eQ || sTemp == eB) {
                 posOfAttackers.add(temp);
                 check = true;
+                break;
             }
             if (searchLength == 1 && 
             (sTemp == eK || sTemp == eP)) {
                 posOfAttackers.add(temp);
                 check = true; 
+                break;
             }
             temp += 7;
         }
@@ -849,10 +857,12 @@ public class Board {
             if (sTemp == eQ || sTemp == eR) {
                 posOfAttackers.add(temp);
                 check = true;
+                break;
             }
             if (searchLength == 1 && sTemp == eK) {
                 posOfAttackers.add(temp);
                 check = true; 
+                break;
             }
             --temp;
         }
@@ -874,11 +884,13 @@ public class Board {
             if (sTemp == eQ || sTemp == eB) {
                 posOfAttackers.add(temp);
                 check = true;
+                break;
             }
             if (searchLength == 1 && 
                     (sTemp == eK || sTemp == eP)) {
                 posOfAttackers.add(temp);
                 check = true; 
+                break;
             }
             temp -= 9;
         }
@@ -899,10 +911,12 @@ public class Board {
             if (sTemp == eQ || sTemp == eR) {
                 posOfAttackers.add(temp);
                 check = true;
+                break;
             }
             if (searchLength == 1 && sTemp == eK) {
                 posOfAttackers.add(temp);
                 check = true; 
+                break;
             }
             temp -= 8;
         }
@@ -926,11 +940,13 @@ public class Board {
             if (sTemp == eQ || sTemp == eB) {
                 posOfAttackers.add(temp);
                 check = true;
+                break;
             }
             if (searchLength == 1 &&
             (sTemp == eK || sTemp == eP)) {
                 posOfAttackers.add(temp);
                 check = true; 
+                break;
             }
             temp -= 7;
         }
@@ -982,9 +998,18 @@ public class Board {
                 // to check every square in between attackers
                 for (int i = attackers.get(k); i > posOfKing; i -= val) {
                     for (int j = 0; j < active.size(); ++j) {
-                        ArrayList<Object[]> temp; // vector not string!
+                        ArrayList<Object[]> temp = new ArrayList<>(); // vector not string!
                         if (validMove(active.get(j), i)) {
-                            temp = squares;
+                            for (int n = 0; n < squares.size(); n++) {
+                                Object[] o = new Object[3];
+                                char c = ((char)squares.get(n)[0]);
+                                int f = ((int)squares.get(n)[1]);
+                                String str = ((String)squares.get(n)[2]);
+                                o[0] = c;
+                                o[1] = f;
+                                o[2] = str;
+                                temp.add(o);
+                            }
                             updateBoard(active.get(j), i); 
                         } else continue;
 
@@ -1157,7 +1182,18 @@ public class Board {
     }
     
     static public ArrayList<Object[]> snapshot() {
-        return squares;
+        ArrayList<Object[]> temp = new ArrayList<>();
+        for (int n = 0; n < squares.size(); n++) {
+            Object[] o = new Object[3];
+            char c = ((char)squares.get(n)[0]);
+            int f = ((int)squares.get(n)[1]);
+            String str = ((String)squares.get(n)[2]);
+            o[0] = c;
+            o[1] = f;
+            o[2] = str;
+            temp.add(o);
+        }
+        return temp;
     }
     
     static public void resetMove(ArrayList<Object[]> previous) {
